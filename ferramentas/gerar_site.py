@@ -9,6 +9,8 @@ import hashlib
 
 OUT = Path(__file__).resolve().parent.parent / "site"
 DOMINIO = "https://compramoscarros.pt"
+# Email de contacto mostrado em Contactos e na Política de privacidade.
+EMAIL = "comercial@compramos-carros.com"
 
 
 def versao(caminho):
@@ -349,7 +351,7 @@ contactos = f"""
           <li>{I["pin"]}<span><b>Stand Automóveis MGB</b><br>Estrada Nacional 249-4 Vivenda Garcia<br>2785-574. São Domingos de Rana</span></li>
           <li><span style="color:var(--verde);display:flex">{I["whats"].replace('aria-hidden="true"', 'aria-hidden="true" style="width:22px;height:22px"')}</span><a href="https://wa.me/351912263717" target="_blank" rel="noopener">912 263 717</a></li>
           <li>{I["phone"]}<a href="tel:+351912263717">912 263 717</a></li>
-          <li>{I["mail"]}<a href="mailto:comercial@compramos-carros.com">comercial@compramos-carros.com</a></li>
+          <li>{I["mail"]}<a href="mailto:{EMAIL}">{EMAIL}</a></li>
         </ul>
       </div>
     </div>
@@ -370,7 +372,7 @@ privacidade = f"""
     <p><b class="destaque-escuro">Termos e Condições | Política de Privacidade | Informação sobre Protecção de Dados</b></p>
 
     <h2>Quem somos?</h2>
-    <p>Cumprindo o REGULAMENTO (UE) 2016/679 DO PARLAMENTO EUROPEU E DO CONSELHO de 27 de abril de 2016 relativo à proteção das pessoas singulares no que diz respeito ao tratamento de dados pessoais e à livre circulação desses dados (Regulamento Geral sobre a Proteção de Dados), informamos que o site Compramos Carros, marca desenvolvida pela MGB Automóveis, é gerido pela {EMPRESA}, com instalações no Stand Automóveis MGB, Estrada Nacional 249-4 Vivenda Garcia, 2785-574 São Domingos de Rana, Portugal, que actua na área da compra e venda de automóveis.</p>
+    <p>Cumprindo o REGULAMENTO (UE) 2016/679 DO PARLAMENTO EUROPEU E DO CONSELHO de 27 de abril de 2016 relativo à proteção das pessoas singulares no que diz respeito ao tratamento de dados pessoais e à livre circulação desses dados (Regulamento Geral sobre a Proteção de Dados), informamos que o site Compramos Carros, marca desenvolvida pela MGB Automóveis, é gerido pela {EMPRESA}, pessoa colectiva n.º 517923122, com sede na Estrada Nacional 249-4, Vivenda Garcia, 2785-574 São Domingos de Rana, Portugal, que actua na área da compra e venda de automóveis.</p>
 
     <h2>Quem é o responsável pelo tratamento de dados?</h2>
     <p>A entidade Responsável pelo Tratamento dos dados pessoais é a {EMPRESA}, que decide quais os dados recolhidos, os meios de tratamento dos dados e as finalidades para que são utilizados.</p>
@@ -394,7 +396,7 @@ privacidade = f"""
     <p>Os dados serão conservados até que o utilizador pretenda proceder à eliminação dos mesmos.</p>
 
     <h2>Como exercer os seus direitos?</h2>
-    <p>O Utilizador poderá exercer os seus direitos de acesso, rectificação, limitação ao tratamento, oposição, portabilidade e apagamento dos seus dados pessoais. O exercício deste direito poderá ser feito através de email para o seguinte endereço: <a href="mailto:comercial@compramos-carros.com">comercial@compramos-carros.com</a>, ou por carta para a morada acima indicada.</p>
+    <p>O Utilizador poderá exercer os seus direitos de acesso, rectificação, limitação ao tratamento, oposição, portabilidade e apagamento dos seus dados pessoais. O exercício deste direito poderá ser feito através de email para o seguinte endereço: <a href="mailto:{EMAIL}">{EMAIL}</a>, ou por carta para a morada da sede acima indicada.</p>
     <p>Poderá ainda apresentar uma queixa junto da Comissão Nacional de Proteção de Dados em <a href="https://www.cnpd.pt/" target="_blank" rel="noopener">https://www.cnpd.pt/</a></p>
 
     <h2>Como é assegurada a segurança dos seus dados pessoais?</h2>
