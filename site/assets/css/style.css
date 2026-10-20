@@ -306,3 +306,4 @@ main { overflow-x: clip; }
 .cookies a { color: var(--verde); }
 .cookies .botao { padding: 11px 22px; font-size: 13px; }
 @media (max-width: 560px) { .cookies { right: 96px; left: 12px; bottom: 12px; } }
+.campo[hidden] { display: none; }

@@ -25,6 +25,13 @@ python3 ferramentas/gerar_site.py
 Para ver o site localmente: `python3 -m http.server --directory site 8000` e abrir
 http://localhost:8000.
 
+## Marcas e modelos
+
+A lista do formulário de avaliação está em `site/assets/js/marcas.js` (73 marcas, incluindo
+as que já só existem no mercado de usados). Para acrescentar uma marca ou um modelo basta
+editar esse ficheiro; o formulário ordena tudo alfabeticamente. Quem não encontrar a sua
+marca ou modelo escolhe "Outra marca" / "Outro modelo" e escreve-o num campo de texto.
+
 ## Formulários
 
 Configurados em `assets/js/config.js`:

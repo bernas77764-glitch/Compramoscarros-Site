@@ -106,6 +106,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 </div>
 
 <script src="assets/js/config.js?v={versao("assets/js/config.js")}"></script>
+{f'<script src="assets/js/marcas.js?v={versao("assets/js/marcas.js")}"></script>' if 'data-lista="marca"' in corpo else ""}
 <script src="assets/js/main.js?v={versao("assets/js/main.js")}"></script>
 </body>
 </html>
@@ -185,6 +186,8 @@ inicio = f"""
       {campo("car", escolha("mes", "Mês do Carro", "mes"))}
       {campo("car", escolha("marca", "Marca do carro", "marca"))}
       {campo("car", escolha("modelo", "Modelo do carro", "modelo"))}
+      <div class="campo largo" data-outro="marca" hidden>{I["car"]}<input type="text" name="marca_outra" placeholder="Indique a marca" aria-label="Marca (outra)" required disabled></div>
+      <div class="campo largo" data-outro="modelo" hidden>{I["car"]}<input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
       {campo("car", entrada("versao", "Versão do carro"))}
       {campo("car", escolha("transmissao", "Transmissão", opcoes="<option>Manual</option><option>Automática</option>"))}
       </div>
