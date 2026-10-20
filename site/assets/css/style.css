@@ -104,9 +104,9 @@ main { overflow-x: clip; }
 .heroi.inicio { padding: 64px 0 160px; }
 .heroi.inicio .grelha { display: grid; grid-template-columns: .9fr 1.1fr; gap: 50px; align-items: start; }
 .heroi.inicio .texto { padding-top: 26px; }
-.numeros { display: flex; flex-wrap: wrap; gap: 30px; margin-top: 32px; }
+.numeros { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
 .numeros div { border-left: 4px solid var(--lima); padding-left: 14px; }
-.numeros b { display: block; font-size: 42px; font-weight: 900; line-height: 1; color: var(--lima); }
+.numeros b { display: block; font-size: 40px; font-weight: 900; line-height: 1; color: var(--lima); }
 .numeros span { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
 
 @media (max-width: 1000px) {

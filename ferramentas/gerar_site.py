@@ -169,7 +169,7 @@ inicio = f"""
     <div class="texto">
       <h1>A forma <span class="contorno">fácil</span> de <span class="lima">vender</span> o seu carro</h1>
       <p class="sub">Em apenas <b>3 etapas</b> compramos o seu carro de <b>forma simplificada e justa!</b></p>
-      <div class="numeros"><div><b>24h</b><span>Proposta</span></div><div><b>7</b><span>Dias úteis de validade</span></div><div><b>48H</b><span>Transferência</span></div></div>
+      <div class="numeros"><div><b>24h</b><span>Proposta</span></div><div><b>7</b><span>Dias úteis de validade</span></div><div><b>Imediato</b><span>Pagamento</span></div></div>
     </div>
 
     <form class="cartao" data-formulario data-assunto="Pedido de avaliação grátis">
@@ -280,7 +280,7 @@ como = f"""
       <p class="n-seccao">04</p>
       <h2>Conclusão da <span>venda</span></h2>
       <p>Após a verificação do veículo e a conclusão do acordo referente ao valor de transação, será pedida uma Certidão do veículo para verificar se o mesmo está apto para o processo de transferência de propriedade. Todo o processo será verificado e devidamente documentado (com cópias de todos os documentos)</p>
-      <p><b style="color:#fff">O pagamento será efectuado por transferência bancária</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b style="color:#fff">O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
+      <p><b style="color:#fff">O pagamento será efectuado por transferência bancária imediata</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b style="color:#fff">O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
       <p>Com este processo concluído evitamos todos os problemas que por vezes sucedem na venda a particulares (multas, portagens sem pagamento, IUC’s sem pagamento, etc)</p>
     </div>
     <div class="imagem"><img src="assets/img/como-funciona-conclusao.jpg" alt="Verificação de um carro antes da compra" width="651" height="428" loading="lazy"></div>
