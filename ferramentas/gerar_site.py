@@ -26,7 +26,7 @@ I = {
  "car": ic('<path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
  "whats": '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>',
  "menu": ic('<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>', ' stroke-width="2"'),
- "seta": ic('<line x1="12" y1="3" x2="12" y2="21"/><polyline points="5 14 12 21 19 14"/>', ' class="seta"'),
+ "seta": '<svg class="seta" viewBox="0 0 130 34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" y1="17" x2="126" y2="17"/><polyline points="110 2 127 17 110 32"/></svg>',
 }
 
 MENU = [("como-funciona.html", "Como funciona"), ("quem-somos.html", "Quem Somos"),
@@ -55,7 +55,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -100,8 +100,11 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 """
     (OUT / ficheiro).write_text(html, encoding="utf-8")
 
-AVISO_DADOS = """<p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para facilitar futuros contactos da Compramos Carros.<br>
-<a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>"""
+AVISO_DADOS = """<div class="consentimento">
+  <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados"><span></span></label>
+  <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para facilitar futuros contactos da Compramos Carros.<br>
+  <a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>
+</div>"""
 
 def campo(icone, html):
     return f'<div class="campo">{I[icone]}{html}</div>'
@@ -117,6 +120,7 @@ def escolha(nome, rotulo, lista=None, opcoes="", obrigatorio=True):
 # ------------------------------------------------------------------ Início
 inicio = f"""
 <section class="heroi" id="avaliacao">
+  <span class="deco-anel" aria-hidden="true"></span><span class="deco-pontos" aria-hidden="true"></span><span class="deco-anel-grande" aria-hidden="true"></span>
   <div class="contentor grelha">
     <div class="texto">
       <h1>A forma fácil de <span class="lima">vender</span> o seu carro</h1>
@@ -127,8 +131,9 @@ inicio = f"""
     </div>
 
     <form class="cartao-formulario" data-formulario data-assunto="Pedido de avaliação grátis">
-      <h2>Preencha o formulário e aproveite uma avaliação gratuita!</h2>
+      <div class="cartao-topo"><h2>Preencha o formulário e aproveite uma avaliação gratuita!</h2></div>
       <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="campos">
       {campo("user", entrada("nome", "Nome", extra=' autocomplete="name"'))}
       {campo("phone", entrada("telefone", "Telefone", "tel", ' autocomplete="tel" inputmode="tel"'))}
       {campo("mail", entrada("email", "E-mail", "email", ' autocomplete="email"'))}
@@ -141,6 +146,7 @@ inicio = f"""
       {campo("car", escolha("modelo", "Modelo do carro", "modelo"))}
       {campo("car", entrada("versao", "Versão do carro"))}
       {campo("car", escolha("transmissao", "Transmissão", opcoes="<option>Manual</option><option>Automática</option>"))}
+      </div>
       {AVISO_DADOS}
       <div class="formulario-acao"><button class="botao" type="submit">Pedir avaliação grátis</button></div>
       <div class="mensagem-form" role="status"></div>
@@ -320,10 +326,12 @@ contactos = f"""
     <div class="contactos-grelha">
       <form class="cartao-formulario" data-formulario data-assunto="Contacto através do site">
         <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="campos uma-coluna">
         {campo("user", entrada("nome", "Nome", extra=' autocomplete="name"'))}
         {campo("phone", entrada("telefone", "Telefone", "tel", ' autocomplete="tel" inputmode="tel"'))}
         {campo("mail", entrada("email", "E-mail", "email", ' autocomplete="email"'))}
         <div class="campo vertical"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" aria-label="Mensagem" required></textarea></div>
+        </div>
         {AVISO_DADOS}
         <div class="formulario-acao"><button class="botao" type="submit">Enviar</button></div>
         <div class="mensagem-form" role="status"></div>

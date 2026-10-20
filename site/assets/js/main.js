@@ -119,7 +119,7 @@
   function resumo(form) {
     var linhas = [form.getAttribute("data-assunto") || "Pedido através do site"];
     Array.prototype.forEach.call(form.elements, function (el) {
-      if (!el.name || el.name === "_gotcha" || el.type === "submit" || !el.value) return;
+      if (!el.name || el.name === "_gotcha" || el.type === "submit" || el.type === "checkbox" || !el.value) return;
       var rotulo = el.getAttribute("aria-label") || el.name;
       linhas.push(rotulo + ": " + el.value);
     });
