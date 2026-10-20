@@ -115,8 +115,8 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
     (OUT / ficheiro).write_text(html, encoding="utf-8")
 
 AVISO_DADOS = """<div class="consentimento">
-  <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados"><span></span></label>
-  <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para facilitar futuros contactos da Compramos Carros.<br>
+  <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados e ser contactado por telefone, e-mail ou WhatsApp"><span></span></label>
+  <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para lhe responder, enviar a proposta e facilitar futuros contactos da Compramos Carros, por telefone, e-mail ou WhatsApp.<br>
   <a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>
 </div>"""
 
