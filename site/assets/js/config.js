@@ -10,7 +10,7 @@
  *   Enquanto estiver a false, o cliente é convidado a enviar as fotos por WhatsApp.
  */
 window.CC_CONFIG = {
-  formEndpoint: "",
+  formEndpoint: "https://crm.compramoscarros.pt/api/leads",
   aceitaFotos: false,
   whatsapp: "351912263717",
   telefone: "912 263 717",
