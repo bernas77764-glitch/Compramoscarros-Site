@@ -42,6 +42,18 @@ Configurados em `assets/js/config.js`:
   (com o email da empresa) e coloque o endereço em `formEndpoint`,
   por exemplo `"https://formspree.io/f/abcd1234"`.
 
+
+### Fotos do carro
+
+O formulário de avaliação já tem um campo opcional "Fotos do carro" (até 10 fotos, com
+pré-visualização e redução automática para no máximo 1600 px). Fica escondido enquanto não
+houver um destino que receba ficheiros:
+
+- Hoje (`aceitaFotos: false`): depois do pedido, o cliente é convidado a enviar as fotos
+  pela conversa de WhatsApp.
+- Com o CRM: definir `formEndpoint` com o endereço do CRM e `aceitaFotos: true` em
+  `assets/js/config.js`. O campo aparece e as fotos seguem no envio (`multipart/form-data`)
+  no campo `fotos`, como `foto-1.jpg`, `foto-2.jpg`, …
 ## Publicar em compramoscarros.pt (GitHub Pages)
 
 1. Garantir que as alterações estão no ramo `main`.

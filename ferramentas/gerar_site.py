@@ -39,6 +39,7 @@ I = {
  "shield": ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/>'),
  "euro": ic('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7"/><line x1="7" y1="11" x2="13" y2="11"/><line x1="7" y1="13.5" x2="13" y2="13.5"/>'),
  "doc": ic('<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><polyline points="14 3 14 8 19 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/>'),
+ "camera": ic('<path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/>'),
  "msg": ic('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'),
 }
 
@@ -190,6 +191,10 @@ inicio = f"""
       <div class="campo largo" data-outro="modelo" hidden>{I["car"]}<input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
       {campo("car", entrada("versao", "Versão do carro"))}
       {campo("car", escolha("transmissao", "Transmissão", opcoes="<option>Manual</option><option>Automática</option>"))}
+      <div class="fotos largo" data-fotos hidden>
+        <label class="fotos-zona">{I["camera"]}<span><b>Fotos do carro (opcional)</b>Até 10 fotos: exterior, interior, conta-quilómetros e eventuais danos.</span><input type="file" accept="image/*" multiple aria-label="Fotos do carro"></label>
+        <div class="fotos-lista" aria-live="polite"></div>
+      </div>
       </div>
       {AVISO_DADOS}
       <div class="formulario-acao"><button class="botao" type="submit">Pedir avaliação grátis {I["seta"]}</button></div>
