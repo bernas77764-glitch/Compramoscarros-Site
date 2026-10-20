@@ -34,7 +34,12 @@ I = {
  "car": ic('<path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
  "whats": '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>',
  "menu": ic('<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>', ' stroke-width="2"'),
- "seta": '<svg class="seta" viewBox="0 0 130 34" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" y1="17" x2="126" y2="17"/><polyline points="110 2 127 17 110 32"/></svg>',
+ "seta": ic('<line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/>', ' stroke-width="2.2"'),
+ "clock": ic('<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/>'),
+ "shield": ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/>'),
+ "euro": ic('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7"/><line x1="7" y1="11" x2="13" y2="11"/><line x1="7" y1="13.5" x2="13" y2="13.5"/>'),
+ "doc": ic('<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><polyline points="14 3 14 8 19 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/>'),
+ "msg": ic('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'),
 }
 
 MENU = [("como-funciona.html", "Como funciona"), ("quem-somos.html", "Quem Somos"),
@@ -63,16 +68,16 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css?v={versao("assets/css/style.css")}">
 </head>
 <body>
 <header class="cabecalho">
   <div class="contentor">
-    <a class="logo" href="index.html" aria-label="Compramos Carros — página inicial"><img src="assets/img/logo.svg" alt="Compramos Carros" width="170" height="41"></a>
+    <a class="logo" href="index.html" aria-label="Compramos Carros — página inicial"><img src="assets/img/logo.svg" alt="Compramos Carros" width="180" height="43"></a>
     <button class="menu-botao" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navegacao">{I["menu"]}</button>
     <nav class="navegacao" id="navegacao" aria-label="Menu principal">
-      <ul class="menu">{menu}</ul>
+      <ul class="menu">{menu}<li><a class="botao" href="index.html#avaliacao">Avaliação grátis</a></li></ul>
     </nav>
   </div>
 </header>
@@ -83,14 +88,13 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 
 <footer class="rodape">
   <div class="contentor">
-    <img class="logo-rodape" src="assets/img/logo.svg" alt="Compramos Carros" width="160" height="38" loading="lazy">
-    <ul class="rodape-menu">{"".join(f'<li><a href="{h}">{n}</a></li>' for h, n in MENU)}</ul>
-    <ul class="rodape-legal">
-      <li><a href="politica-de-privacidade.html">Política de privacidade</a></li>
-      <li><a href="politica-de-cookies.html">Política de cookies</a></li>
-      <li><a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de reclamações</a></li>
-    </ul>
-    <p class="copyright">© <span data-ano>2024</span> Compramos Carros.<br>Todos os direitos reservados.</p>
+    <div class="grelha">
+      <div class="marca"><img src="assets/img/logo.svg" alt="Compramos Carros" width="200" height="48" loading="lazy"><p>Uma marca desenvolvida pela MGB Automóveis.</p></div>
+      <div><h4>Navegação</h4><ul>{"".join(f'<li><a href="{h}">{n}</a></li>' for h, n in MENU)}</ul></div>
+      <div><h4>Contactos</h4><ul><li>Stand Automóveis MGB</li><li>Estrada Nacional 249-4 Vivenda Garcia</li><li>2785-574 S. Domingos de Rana</li><li><a href="tel:+351912263717">912 263 717</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li></ul></div>
+      <div><h4>Informação</h4><ul><li><a href="politica-de-privacidade.html">Política de privacidade</a></li><li><a href="politica-de-cookies.html">Política de cookies</a></li><li><a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de reclamações</a></li><li>Seg a Sex das 9h às 19h<br>Sábado das 10h às 18h</li></ul></div>
+    </div>
+    <p class="base">© <span data-ano>2026</span> Compramos Carros. Todos os direitos reservados.</p>
   </div>
 </footer>
 
@@ -125,22 +129,51 @@ def escolha(nome, rotulo, lista=None, opcoes="", obrigatorio=True):
     req = " required" if obrigatorio else ""
     return f'<select name="{nome}" aria-label="{rotulo}"{dl}{req}><option value="" disabled selected>{rotulo}</option>{opcoes}</select>'
 
+def heroi(rotulo, titulo, sub=""):
+    """Topo diagonal das páginas interiores."""
+    sub_html = f'<p class="sub">{sub}</p>' if sub else ""
+    return f"""<section class="heroi pagina">
+  <div class="contentor">
+    <span class="rotulo">{rotulo}</span>
+    <h1>{titulo}</h1>
+    {sub_html}
+  </div>
+</section>"""
+
+FINAL = f"""<section class="final">
+  <div class="contentor">
+    <h2>Peça a sua <span>avaliação grátis</span></h2>
+    <a class="botao grande" href="index.html#avaliacao">Peça a sua avaliação grátis {I["seta"]}</a>
+  </div>
+</section>"""
+
+VANTAGENS = [("clock", "Proposta em 24 horas", "Em 24 horas irá receber uma proposta (por email ou contacto telefónico) que será válida por 7 dias úteis."),
+             ("euro", "Pagamento por transferência bancária imediata", "Para maior conforto, realizamos o pagamento por transferência bancária imediata."),
+             ("doc", "Transferência de propriedade em 48H", "Todo o processo será verificado e devidamente documentado (com cópias de todos os documentos)."),
+             ("shield", "Segurança em todo o processo", "Todo o procedimento é acompanhado de documentos que comprovam e validam a transação.")]
+vantagens_html = "".join(f'<div>{I[i]}<h3>{t}</h3><p>{d}</p></div>' for i, t, d in VANTAGENS)
+
 # ------------------------------------------------------------------ Início
+PASSOS = [("avaliamos", "Avaliamos o seu carro", "Avalie o seu carro conosco e descubra o verdadeiro valor do seu veículo."),
+          ("oferta", "Fazemos a oferta", "Fazemos a oferta mais competitiva para o seu veículo. Confie em nós para obter o melhor negócio possível."),
+          ("finalizamos", "Finalizamos a compra", "Finalizamos a compra do seu carro de forma rápida e sem complicações.")]
+passos_html = "".join(
+    f'<div class="etapa"><div class="n">0{n}</div><img src="assets/img/icones/{f}.png" alt="" width="60" height="60" loading="lazy"><h3>{t}</h3><p>{d}</p></div>'
+    for n, (f, t, d) in enumerate(PASSOS, 1))
+
 inicio = f"""
-<section class="heroi" id="avaliacao">
-  <span class="deco-anel" aria-hidden="true"></span><span class="deco-pontos" aria-hidden="true"></span><span class="deco-anel-grande" aria-hidden="true"></span>
+<section class="heroi inicio" id="avaliacao">
   <div class="contentor grelha">
     <div class="texto">
-      <h1>A forma fácil de <span class="lima">vender</span> o seu carro</h1>
-      <p class="subtitulo">Em apenas <b>3 etapas</b> compramos o seu carro de <b>forma simplificada e justa!</b></p>
-      <h2 class="marque">Marque agora</h2>
-      <p class="marque-sub">A avaliação do seu veículo!</p>
-      {I["seta"]}
+      <h1>A forma <span class="contorno">fácil</span> de <span class="lima">vender</span> o seu carro</h1>
+      <p class="sub">Em apenas <b>3 etapas</b> compramos o seu carro de <b>forma simplificada e justa!</b></p>
+      <div class="numeros"><div><b>24h</b><span>Proposta</span></div><div><b>7</b><span>Dias úteis de validade</span></div><div><b>48H</b><span>Transferência</span></div></div>
     </div>
 
-    <form class="cartao-formulario" data-formulario data-assunto="Pedido de avaliação grátis">
-      <div class="cartao-topo"><h2>Preencha o formulário e aproveite uma avaliação gratuita!</h2></div>
+    <form class="cartao" data-formulario data-assunto="Pedido de avaliação grátis">
+      <div class="cab"><h2><small>Marque agora</small>A avaliação do seu veículo!</h2></div>
       <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="grupo">Preencha o formulário e aproveite uma avaliação gratuita!</p>
       <div class="campos">
       {campo("user", entrada("nome", "Nome", extra=' autocomplete="name"'))}
       {campo("phone", entrada("telefone", "Telefone", "tel", ' autocomplete="tel" inputmode="tel"'))}
@@ -156,35 +189,24 @@ inicio = f"""
       {campo("car", escolha("transmissao", "Transmissão", opcoes="<option>Manual</option><option>Automática</option>"))}
       </div>
       {AVISO_DADOS}
-      <div class="formulario-acao"><button class="botao" type="submit">Pedir avaliação grátis</button></div>
+      <div class="formulario-acao"><button class="botao" type="submit">Pedir avaliação grátis {I["seta"]}</button></div>
       <div class="mensagem-form" role="status"></div>
     </form>
   </div>
 </section>
 
-<section class="seccao processo">
-  <div class="contentor grelha">
-    <div class="imagem-deco esquerda"><img src="assets/img/inicio-processo.webp" alt="Aperto de mão na compra de um carro e fila de carros usados" width="651" height="603" loading="lazy" style="box-shadow:none"></div>
-    <div>
-      <h2 class="seccao-titulo">Processo simplificado</h2>
-      <div class="passo">
-        <img src="assets/img/icones/avaliamos.png" alt="" width="64" height="62" loading="lazy">
-        <h3>Avaliamos o seu carro</h3>
-        <p>Avalie o seu carro conosco e descubra o verdadeiro valor do seu veículo.</p>
-      </div>
-      <div class="passo">
-        <img src="assets/img/icones/oferta.png" alt="" width="64" height="66" loading="lazy">
-        <h3>Fazemos a oferta</h3>
-        <p>Fazemos a oferta mais competitiva para o seu veículo. Confie em nós para obter o melhor negócio possível.</p>
-      </div>
-      <div class="passo">
-        <img src="assets/img/icones/finalizamos.png" alt="" width="64" height="61" loading="lazy">
-        <h3>Finalizamos a compra</h3>
-        <p>Finalizamos a compra do seu carro de forma rápida e sem complicações.</p>
-      </div>
-    </div>
+<section class="seccao colada">
+  <div class="contentor">
+    <h2 class="titulo">Processo <span>simplificado</span></h2>
+    <div class="etapas">{passos_html}</div>
   </div>
 </section>
+
+<section class="faixa">
+  <div class="contentor"><div class="vantagens">{vantagens_html}</div></div>
+</section>
+
+{FINAL}
 """
 pagina("index.html", "Compramos Carros",
        "A forma fácil de vender o seu carro. Em apenas 3 etapas compramos o seu carro de forma simplificada e justa! Peça a sua avaliação grátis.",
@@ -199,59 +221,65 @@ CRITERIOS = [("impostos", "Ter os impostos em dia"), ("ipo", "Ter IPO válida"),
              ("taxi", "Nunca ter sido utilizado como Táxi, Rent-a-car, Escola de Condução ou Competição"),
              ("quilometragem", "Quilometragem não viciada")]
 crit_html = "".join(
-    f'<div class="criterio"><img src="assets/img/icones/{f}.png" alt="" width="64" height="64" loading="lazy"><h3>{t}</h3></div>'
+    f'<div class="criterio"><img src="assets/img/icones/{f}.png" alt="" width="60" height="60" loading="lazy"><h3>{t}</h3></div>'
     for f, t in CRITERIOS)
-PECA = '<p class="acao"><a class="botao" href="index.html#avaliacao">Peça a sua avaliação grátis</a></p>'
+PECA = f'<p><a class="botao" href="index.html#avaliacao">Peça a sua avaliação grátis {I["seta"]}</a></p>'
 
 como = f"""
-<div class="titulo-pagina"><h1>Como funciona</h1></div>
+{heroi("Como funciona", 'Como <span class="lima">funciona</span>', "Em apenas <b>3 etapas</b> compramos o seu carro de <b>forma simplificada e justa!</b>")}
 
-<section class="seccao">
+<section class="seccao colada">
   <div class="contentor bloco">
     <div>
-      <h2>Facilidade e simplicidade</h2>
+      <p class="n-seccao">01</p>
+      <h2>Facilidade e <span>simplicidade</span></h2>
       <p>Insira todos os detalhes relativos ao veículo que deseja vender e submeta para avaliação no Compramos Carros. É de vital importância que seja sincero e honesto nas condições do seu automóvel, pois é com base nessa informação que será efectuada a proposta (sempre sujeita a uma inspeção presencial).</p>
       <p><b>Em 24 horas irá receber uma proposta (por email ou contacto telefónico) que será válida por 7 dias úteis.</b></p>
       <p>Quando receber o email com a nossa proposta, agende directamente no nosso calendário a inspeção final e entrega do seu veículo.</p>
       {PECA}
     </div>
-    <div class="bloco-imagem imagem-deco"><img src="assets/img/como-funciona-facilidade.jpg" alt="Cliente satisfeito junto ao seu carro" width="651" height="428" loading="lazy"></div>
+    <div class="imagem"><img src="assets/img/como-funciona-facilidade.jpg" alt="Cliente satisfeito junto ao seu carro" width="651" height="428"></div>
   </div>
 </section>
 
-<section class="seccao" style="background:var(--fundo-suave)">
+<section class="seccao cinza">
   <div class="contentor">
-    <h2 class="seccao-titulo">Critérios de avaliação</h2>
-    <p class="introducao">Além dos dados que nos fornece ao inserir as informações do seu veículo, nossa avaliação leva em conta os seguintes critérios:</p>
+    <p class="n-seccao">02</p>
+    <h2 class="titulo">Critérios de <span>avaliação</span></h2>
+    <p class="intro">Além dos dados que nos fornece ao inserir as informações do seu veículo, nossa avaliação leva em conta os seguintes critérios:</p>
     <div class="criterios">{crit_html}</div>
     <p class="nota">Caso haja incertezas ou se suspeitar que o seu veículo possa não cumprir com estes critérios, por favor mencione isso ao inserir os dados do seu carro para avaliação.</p>
     <p class="nota">*Se o seu carro estiver sob financiamento, também estamos aptos a adquiri-lo. Nesse caso, solicitaremos o valor de quitação à instituição financeira e cuidaremos de todo o processo, mediante a sua autorização. O pagamento será realizado por meio de ajuste de contas.</p>
-    {PECA}
+    <p class="centro" style="margin-top:30px"><a class="botao" href="index.html#avaliacao">Peça a sua avaliação grátis {I["seta"]}</a></p>
   </div>
 </section>
 
 <section class="seccao">
   <div class="contentor bloco inverso">
     <div>
-      <h2>Inspeção antes de entrega</h2>
+      <p class="n-seccao">03</p>
+      <h2>Inspeção antes de <span>entrega</span></h2>
       <p>Nem todos somos especialistas na avaliação dos danos e estado geral do automóvel, essa é a nossa função e com a nossa vasta experiência sabemos fazê-lo muito bem. Pedimos apenas que seja sincero e objectivo na informação fornecida.</p>
       <p><b>De forma a ser um processo completamente justo para ambas as partes, reservamo-nos o direito de realizar uma inspeção no carro para determinar se desejamos ou não adquiri-lo e qual será o valor definitivo da compra.</b></p>
     </div>
-    <div class="bloco-imagem imagem-deco"><img src="assets/img/como-funciona-inspecao.jpg" alt="Carros num stand" width="651" height="428" loading="lazy"></div>
+    <div class="imagem azul"><img src="assets/img/como-funciona-inspecao.jpg" alt="Carros num stand" width="651" height="428" loading="lazy"></div>
   </div>
 </section>
 
-<section class="seccao">
+<section class="faixa">
   <div class="contentor bloco">
     <div>
-      <h2>Conclusão da venda</h2>
+      <p class="n-seccao">04</p>
+      <h2>Conclusão da <span>venda</span></h2>
       <p>Após a verificação do veículo e a conclusão do acordo referente ao valor de transação, será pedida uma Certidão do veículo para verificar se o mesmo está apto para o processo de transferência de propriedade. Todo o processo será verificado e devidamente documentado (com cópias de todos os documentos)</p>
-      <p><b>O pagamento será efectuado por transferência bancária</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b>O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
+      <p><b style="color:#fff">O pagamento será efectuado por transferência bancária</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b style="color:#fff">O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
       <p>Com este processo concluído evitamos todos os problemas que por vezes sucedem na venda a particulares (multas, portagens sem pagamento, IUC’s sem pagamento, etc)</p>
     </div>
-    <div class="bloco-imagem imagem-deco esquerda"><img src="assets/img/como-funciona-conclusao.jpg" alt="Verificação de um carro antes da compra" width="651" height="428" loading="lazy"></div>
+    <div class="imagem"><img src="assets/img/como-funciona-conclusao.jpg" alt="Verificação de um carro antes da compra" width="651" height="428" loading="lazy"></div>
   </div>
 </section>
+
+{FINAL}
 """
 pagina("como-funciona.html", "Como Funciona - Compramos Carros",
        "Saiba como funciona a venda do seu carro ao Compramos Carros: proposta em 24 horas, critérios de avaliação, inspeção e conclusão da venda.",
@@ -264,37 +292,40 @@ equipa_html = "".join(
     f'<div class="membro"><img src="assets/img/equipa-{f}.jpg" alt="{n}" width="429" height="550" loading="lazy"><h3>{n}</h3></div>'
     for f, n in EQUIPA)
 quem = f"""
-<div class="titulo-pagina"><h1>Quem somos</h1></div>
+{heroi("Quem somos", 'Quem <span class="lima">somos</span>')}
 
-<section class="seccao">
+<section class="seccao colada">
   <div class="contentor bloco">
     <div>
-      <p class="boas-vindas">Bem-vindo ao Compramos Carros, uma marca desenvolvida pela MGB Automóveis.</p>
+      <h2>Bem-vindo ao <span>Compramos Carros</span></h2>
+      <p><b>Bem-vindo ao Compramos Carros, uma marca desenvolvida pela MGB Automóveis.</b></p>
       <p>Nossa missão é oferecer um processo simples, rápido e transparente para si que deseja vender o seu carro!</p>
-      {PECA.replace('class="acao"', 'class="acao" style="text-align:inherit"')}
+      {PECA}
     </div>
-    <div class="bloco-imagem imagem-deco"><img src="assets/img/quem-somos.jpg" alt="Aperto de mão junto a um carro vermelho" width="651" height="428"></div>
+    <div class="imagem"><img src="assets/img/quem-somos.jpg" alt="Aperto de mão junto a um carro vermelho" width="651" height="428"></div>
   </div>
 </section>
 
-<section class="seccao">
+<section class="seccao cinza">
   <div class="contentor">
-    <h2 class="seccao-titulo">A equipa</h2>
-    <p class="introducao"><b class="destaque-escuro">A nossa força reside na equipa dedicada e disponível!</b> Cada um de nós, com nossa experiência única e paixão pelo negócio, esforça-se para lhe proporcionar a experiência mais tranquila e confortável no processo de venda do seu carro.</p>
+    <h2 class="titulo">A <span>equipa</span></h2>
+    <p class="intro"><b style="color:var(--azul)">A nossa força reside na equipa dedicada e disponível!</b> Cada um de nós, com nossa experiência única e paixão pelo negócio, esforça-se para lhe proporcionar a experiência mais tranquila e confortável no processo de venda do seu carro.</p>
     <div class="equipa">{equipa_html}</div>
   </div>
 </section>
 
-<section class="seccao">
+<section class="faixa">
   <div class="contentor bloco inverso">
     <div>
-      <h2>O que nos distingue</h2>
+      <h2>O que nos <span>distingue</span></h2>
       <p>O que nos diferencia face à nossa concorrência, é a rapidez na formalização da oferta para o seu carro. Temos critérios de velocidade ambiciosos, e num prazo de 24 horas recebe a nossa oferta (durante o horário laboral, das 10h às 19h).</p>
       <p>Além disso, garantimos segurança em todo o processo. Todo o procedimento é acompanhado de documentos que comprovam e validam a transação. Para maior conforto, realizamos o pagamento por transferência bancária imediata.</p>
     </div>
-    <div class="bloco-imagem imagem-deco"><img src="assets/img/quem-somos-distingue.jpg" alt="Aperto de mão junto a um carro azul" width="651" height="428" loading="lazy"></div>
+    <div class="imagem"><img src="assets/img/quem-somos-distingue.jpg" alt="Aperto de mão junto a um carro azul" width="651" height="428" loading="lazy"></div>
   </div>
 </section>
+
+{FINAL}
 """
 pagina("quem-somos.html", "Quem Somos - Compramos Carros",
        "Bem-vindo ao Compramos Carros, uma marca desenvolvida pela MGB Automóveis. Um processo simples, rápido e transparente para vender o seu carro.",
@@ -303,20 +334,21 @@ pagina("quem-somos.html", "Quem Somos - Compramos Carros",
 # ------------------------------------------------------------------ Centro de entregas
 MAPA = f"""<div class="mapa"><iframe src="{MAPA_EMBED}" title="Mapa — Stand Automóveis MGB, São Domingos de Rana" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>"""
 centro = f"""
-<div class="titulo-pagina"><h1>Centro de entregas</h1></div>
+{heroi("Centro de entregas", 'Centro de <span class="lima">entregas</span>', "Bem-vindo ao Centro de Entrega, onde oferecemos um atendimento excepcional para garantir sua total satisfação.")}
 
-<section class="seccao">
+<section class="seccao colada">
   <div class="contentor">
-    <p class="introducao">Bem-vindo ao Centro de Entrega, onde oferecemos um atendimento excepcional para garantir sua total satisfação.</p>
     <div class="infos">
-      <div class="info"><img src="assets/img/icones/morada.png" alt="" width="64" height="64"><p><b>Stand Automóveis MGB</b>Estrada Nacional 249-4 Vivenda Garcia.<br>2785-574 S. Domingos de Rana</p></div>
-      <div class="info"><img src="assets/img/icones/horario.png" alt="" width="64" height="64"><p><b>Seg a Sex das 9h às 19h. Sábado das 10h às 18h</b>Disponibilidade extra mediante marcação</p></div>
-      <div class="info"><img src="assets/img/icones/telefone.png" alt="" width="64" height="64"><p><b><a href="tel:+351912263717" style="text-decoration:none">912 263 717</a></b>(Chamada para rede móvel nacional)</p></div>
+      <div class="info"><img src="assets/img/icones/morada.png" alt="" width="62" height="62"><h3>Stand Automóveis MGB</h3><p>Estrada Nacional 249-4 Vivenda Garcia.<br>2785-574 S. Domingos de Rana</p></div>
+      <div class="info"><img src="assets/img/icones/horario.png" alt="" width="62" height="62"><h3>Seg a Sex das 9h às 19h. Sábado das 10h às 18h</h3><p>Disponibilidade extra mediante marcação</p></div>
+      <div class="info"><img src="assets/img/icones/telefone.png" alt="" width="62" height="62"><p><a href="tel:+351912263717">912 263 717</a></p><p>(Chamada para rede móvel nacional)</p></div>
     </div>
     {MAPA}
     <p class="mapa-ligacao">Para ver o mapa no google Maps <a href="{MAPA_LINK}" target="_blank" rel="noopener">clique aqui</a></p>
   </div>
 </section>
+
+{FINAL}
 """
 pagina("centro-de-entregas.html", "Centro de Entregas - Compramos Carros",
        "Centro de Entregas Compramos Carros: Stand Automóveis MGB, Estrada Nacional 249-4, São Domingos de Rana. Seg a Sex das 9h às 19h, Sábado das 10h às 18h.",
@@ -324,36 +356,32 @@ pagina("centro-de-entregas.html", "Centro de Entregas - Compramos Carros",
 
 # ------------------------------------------------------------------ Contactos
 contactos = f"""
-<div class="titulo-pagina"><h1>Contactos</h1></div>
+{heroi("Contactos", 'Fale <span class="lima">connosco</span>', "A nossa equipa está aqui para o ajudar. Entre em contacto connosco e iremos atender o seu pedido o mais brevemente possível.")}
 
-<section class="seccao">
-  <div class="contentor">
-    <h2 class="seccao-titulo">Fale connosco</h2>
-    <p class="introducao">A nossa equipa está aqui para o ajudar. Entre em contacto connosco e iremos atender o seu pedido o mais brevemente possível.</p>
-
-    <div class="contactos-grelha">
-      <form class="cartao-formulario" data-formulario data-assunto="Contacto através do site">
-        <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="campos uma-coluna">
+<section class="seccao colada">
+  <div class="contentor contactos-grelha">
+    <form class="cartao" data-formulario data-assunto="Contacto através do site">
+      <div class="cab"><h2><small>Contactos</small>Fale connosco</h2></div>
+      <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="campos">
         {campo("user", entrada("nome", "Nome", extra=' autocomplete="name"'))}
         {campo("phone", entrada("telefone", "Telefone", "tel", ' autocomplete="tel" inputmode="tel"'))}
-        {campo("mail", entrada("email", "E-mail", "email", ' autocomplete="email"'))}
-        <div class="campo vertical"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" aria-label="Mensagem" required></textarea></div>
-        </div>
-        {AVISO_DADOS}
-        <div class="formulario-acao"><button class="botao" type="submit">Enviar</button></div>
-        <div class="mensagem-form" role="status"></div>
-      </form>
-
-      <div>
-        {MAPA}
-        <ul class="lista-contactos">
-          <li>{I["pin"]}<span><b>Stand Automóveis MGB</b><br>Estrada Nacional 249-4 Vivenda Garcia<br>2785-574. São Domingos de Rana</span></li>
-          <li><span style="color:var(--verde);display:flex">{I["whats"].replace('aria-hidden="true"', 'aria-hidden="true" style="width:22px;height:22px"')}</span><a href="https://wa.me/351912263717" target="_blank" rel="noopener">912 263 717</a></li>
-          <li>{I["phone"]}<a href="tel:+351912263717">912 263 717</a></li>
-          <li>{I["mail"]}<a href="mailto:{EMAIL}">{EMAIL}</a></li>
-        </ul>
+        <div class="campo largo">{I["mail"]}{entrada("email", "E-mail", "email", ' autocomplete="email"')}</div>
+        <div class="campo largo area">{I["msg"]}<textarea name="mensagem" placeholder="Mensagem" aria-label="Mensagem" required></textarea></div>
       </div>
+      {AVISO_DADOS}
+      <div class="formulario-acao"><button class="botao" type="submit">Enviar {I["seta"]}</button></div>
+      <div class="mensagem-form" role="status"></div>
+    </form>
+
+    <div>
+      {MAPA}
+      <ul class="lista-contactos">
+        <li><span class="ico">{I["pin"]}</span><span><b>Stand Automóveis MGB</b><br>Estrada Nacional 249-4 Vivenda Garcia<br>2785-574. São Domingos de Rana</span></li>
+        <li><span class="ico">{I["whats"]}</span><span><b>WhatsApp</b><br><a href="https://wa.me/351912263717" target="_blank" rel="noopener">912 263 717</a></span></li>
+        <li><span class="ico">{I["phone"]}</span><span><b>Telefone</b><br><a href="tel:+351912263717">912 263 717</a></span></li>
+        <li><span class="ico">{I["mail"]}</span><span><b>E-mail</b><br><a href="mailto:{EMAIL}">{EMAIL}</a></span></li>
+      </ul>
     </div>
   </div>
 </section>
@@ -365,10 +393,10 @@ pagina("contactos.html", "Contactos - Compramos Carros",
 # ------------------------------------------------------------------ Política de privacidade
 EMPRESA = "Barros Matos e Soares Automóveis Lda."
 privacidade = f"""
-<div class="titulo-pagina"><h1>Política de privacidade</h1></div>
+{heroi("Informação legal", 'Política de <span class="lima">privacidade</span>')}
 
-<section class="seccao">
-  <div class="contentor legal">
+<section class="seccao colada">
+  <div class="contentor estreito legal">
     <p><b class="destaque-escuro">Termos e Condições | Política de Privacidade | Informação sobre Protecção de Dados</b></p>
 
     <h2>Quem somos?</h2>
@@ -425,10 +453,10 @@ COOKIES = [
  ("Cookies de publicidade comportamental", "São aqueles que armazenam informações sobre o comportamento do utilizador obtido através da observação contínua de seus hábitos de navegação, permitindo desenvolver um perfil específico para exibir anúncios com base no mesmo."),
 ]
 cookies = f"""
-<div class="titulo-pagina"><h1>Política de cookies</h1></div>
+{heroi("Informação legal", 'Política de <span class="lima">cookies</span>')}
 
-<section class="seccao">
-  <div class="contentor legal">
+<section class="seccao colada">
+  <div class="contentor estreito legal">
     <h2>Como usamos os cookies?</h2>
     <p>Um cookie é um arquivo que é instalado no computador quando se acede a determinadas páginas na Internet. Os Cookies que utilizamos são os seguintes:</p>
     <ul>{"".join(f"<li><b>{t}:</b> {d}</li>" for t, d in COOKIES)}</ul>
@@ -439,11 +467,10 @@ pagina("politica-de-cookies.html", "Política de Cookies - Compramos Carros",
        "Política de Cookies do site Compramos Carros.", cookies)
 
 # ------------------------------------------------------------------ 404
-erro = """
-<div class="titulo-pagina"><h1>Página não encontrada</h1></div>
-<section class="seccao"><div class="contentor centro">
-  <p class="introducao">A página que procura não existe ou foi movida.</p>
-  <p class="acao"><a class="botao" href="index.html">Voltar à página inicial</a></p>
+erro = f"""
+{heroi("Erro 404", 'Página não <span class="lima">encontrada</span>', "A página que procura não existe ou foi movida.")}
+<section class="seccao colada"><div class="contentor">
+  <p><a class="botao" href="index.html">Voltar à página inicial {I["seta"]}</a></p>
 </div></section>
 """
 pagina("404.html", "Página não encontrada - Compramos Carros", "Página não encontrada.", erro)
