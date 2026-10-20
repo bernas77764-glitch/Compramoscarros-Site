@@ -5,9 +5,15 @@ Cabeçalho, rodapé e textos de todas as páginas estão aqui: altere este fiche
 corra  python3 ferramentas/gerar_site.py  para atualizar os .html.
 """
 from pathlib import Path
+import hashlib
 
 OUT = Path(__file__).resolve().parent.parent / "site"
 DOMINIO = "https://compramoscarros.pt"
+
+
+def versao(caminho):
+    """Impressão digital do ficheiro, para o navegador não usar uma versão antiga em cache."""
+    return hashlib.sha1((OUT / caminho).read_bytes()).hexdigest()[:8]
 MAPA_Q = "MGB Automóveis, Estrada Nacional 249-4, 2785-574 São Domingos de Rana"
 from urllib.parse import quote
 MAPA_EMBED = "https://www.google.com/maps?q=" + quote(MAPA_Q) + "&output=embed"
@@ -56,7 +62,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v={versao("assets/css/style.css")}">
 </head>
 <body>
 <header class="cabecalho">
@@ -93,8 +99,8 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
   <button class="botao" type="button">Aceitar</button>
 </div>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/config.js?v={versao("assets/js/config.js")}"></script>
+<script src="assets/js/main.js?v={versao("assets/js/main.js")}"></script>
 </body>
 </html>
 """
