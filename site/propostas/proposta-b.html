@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Compramos Carros — Proposta B · Imersiva</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+.heroi { position: relative; color: #fff; padding: 80px 0 120px; background: url('../assets/img/inicio-processo.webp') right center / cover no-repeat; }
+.heroi::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(46,41,78,.97) 0%, rgba(46,41,78,.9) 38%, rgba(27,153,139,.75) 100%); }
+.heroi .grelha { position: relative; display: grid; grid-template-columns: 1fr 470px; gap: 60px; align-items: center; }
+.heroi h1 { color: #fff; font-size: clamp(42px, 5.6vw, 76px); font-weight: 900; text-transform: uppercase; line-height: 1.02; }
+.heroi h1 span { color: var(--lima); display: block; }
+.heroi .sub { font-size: 22px; color: rgba(255,255,255,.9); max-width: 540px; }
+.heroi .sub b { color: var(--lima); }
+.heroi .lista { list-style: none; padding: 0; margin: 28px 0 34px; display: grid; gap: 12px; }
+.heroi .lista li { display: flex; gap: 12px; align-items: center; font-weight: 600; font-size: 17px; }
+.heroi .lista svg { width: 24px; height: 24px; background: var(--lima); color: var(--azul); border-radius: 50%; padding: 4px; flex: 0 0 24px; }
+.cartao { background: rgba(255,255,255,.97); border-radius: 20px; padding: 28px; color: var(--texto); box-shadow: 0 30px 70px rgba(0,0,0,.35); backdrop-filter: blur(6px); }
+.cartao h2 { font-size: 22px; text-transform: uppercase; text-align: center; margin-bottom: 18px; }
+.cartao h2 span { display: block; color: var(--verde); font-size: 15px; letter-spacing: .1em; }
+.cartao .botao { width: 100%; justify-content: center; margin-top: 18px; }
+.onda { display: block; width: 100%; height: 70px; margin-top: -69px; position: relative; }
+.cronologia { padding: 70px 0 90px; }
+.cronologia h2, .equipa h2 { text-align: center; font-size: clamp(32px, 4vw, 46px); text-transform: uppercase; margin-bottom: 56px; }
+.cronologia .linha { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; position: relative; }
+.cronologia .linha::before { content: ""; position: absolute; left: 16%; right: 16%; top: 44px; height: 4px; background: repeating-linear-gradient(90deg, var(--lima) 0 14px, transparent 14px 24px); }
+.etapa { text-align: center; position: relative; }
+.etapa .circulo { width: 92px; height: 92px; border-radius: 50%; background: #fff; border: 4px solid var(--verde); display: grid; place-items: center; margin: 0 auto 22px; position: relative; box-shadow: 0 10px 24px rgba(27,153,139,.2); }
+.etapa .circulo img { width: 54px; }
+.etapa .circulo b { position: absolute; top: -8px; right: -8px; width: 32px; height: 32px; border-radius: 50%; background: var(--laranja); color: #fff; display: grid; place-items: center; font-size: 15px; }
+.etapa h3 { text-transform: uppercase; font-size: 20px; }
+.etapa p { color: var(--suave); max-width: 320px; margin: 0 auto; }
+.distingue { background: var(--fundo); padding: 90px 0; }
+.distingue .grelha { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.distingue img { border-radius: 24px; box-shadow: 0 24px 50px rgba(46,41,78,.18); }
+.distingue h2 { font-size: clamp(30px, 3.6vw, 42px); text-transform: uppercase; }
+.distingue .item { display: flex; gap: 16px; margin-top: 22px; }
+.distingue .item svg { width: 46px; height: 46px; flex: 0 0 46px; padding: 10px; border-radius: 12px; background: var(--azul); color: var(--lima); }
+.distingue .item h3 { font-size: 18px; margin: 0 0 4px; }
+.distingue .item p { margin: 0; color: var(--suave); }
+.equipa { padding: 90px 0; }
+.equipa .grelha { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.membro { position: relative; border-radius: 22px; overflow: hidden; }
+.membro img { width: 100%; aspect-ratio: 4/5; object-fit: cover; transition: transform .4s; }
+.membro:hover img { transform: scale(1.04); }
+.membro h3 { position: absolute; left: 14px; right: 14px; bottom: 14px; margin: 0; background: rgba(46,41,78,.9); color: #fff; padding: 12px 16px; border-radius: 12px; font-size: 16px; text-transform: uppercase; border-left: 5px solid var(--lima); }
+@media (max-width: 960px) {
+  .heroi .grelha, .distingue .grelha { grid-template-columns: 1fr; }
+  .cronologia .linha { grid-template-columns: 1fr; gap: 44px; }
+  .cronologia .linha::before { display: none; }
+  .equipa .grelha { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+<header class="topo"><div class="contentor">
+  <a href="#"><img src="../assets/img/logo.svg" alt="Compramos Carros" width="176" height="42"></a>
+  <nav><a href="#">Como funciona</a><a href="#">Quem Somos</a><a href="#">Centro de Entregas</a><a href="#">Contactos</a><a class="botao" href="#avaliacao">Avaliação grátis</a></nav>
+</div></header>
+<main>
+
+<section class="heroi" id="avaliacao"><div class="contentor grelha">
+  <div>
+    <h1>A forma fácil de <span>vender o seu carro</span></h1>
+    <p class="sub">Em apenas <b>3 etapas</b> compramos o seu carro de <b>forma simplificada e justa!</b></p>
+    <ul class="lista"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 10 18 20 6"/></svg>Proposta em 24 horas</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 10 18 20 6"/></svg>Pagamento por transferência bancária imediata</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 12 10 18 20 6"/></svg>Transferência de propriedade em 48H</li></ul>
+    <a class="botao contorno" href="#processo">Como funciona</a>
+  </div>
+  <form class="cartao" onsubmit="return false">
+    <h2><span>Marque agora</span>A avaliação do seu veículo!</h2>
+    <div class="f-grelha"><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><input type="text" placeholder="Nome" aria-label="Nome"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><input type="tel" placeholder="Telefone" aria-label="Telefone"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="1"/><polyline points="2 5 12 13 22 5"/></svg><input type="email" placeholder="E-mail" aria-label="E-mail"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><select aria-label="Distrito"><option>Distrito</option></select></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg><input type="text" placeholder="KM do carro" aria-label="KM do carro"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" placeholder="Matrícula do carro" aria-label="Matrícula do carro"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select aria-label="Ano do Carro"><option>Ano do Carro</option></select></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select aria-label="Mês do Carro"><option>Mês do Carro</option></select></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select aria-label="Marca do carro"><option>Marca do carro</option></select></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select aria-label="Modelo do carro"><option>Modelo do carro</option></select></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" placeholder="Versão do carro" aria-label="Versão do carro"></label><label class="f-campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select aria-label="Transmissão"><option>Transmissão</option></select></label></div>
+    <label class="f-consent"><input type="checkbox"><span>Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para facilitar futuros contactos da Compramos Carros. <a href="../politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></span></label>
+    <button class="botao">Pedir avaliação grátis</button>
+  </form>
+</div></section>
+<svg class="onda" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V30C240 0 480 0 720 25s480 45 720 15v30z" fill="#fff"/></svg>
+<section class="cronologia" id="processo"><div class="contentor">
+  <h2>Processo simplificado</h2>
+  <div class="linha"><div class="etapa"><div class="circulo"><img src="../assets/img/icones/avaliamos.png" alt=""><b>1</b></div><h3>Avaliamos o seu carro</h3><p>Avalie o seu carro conosco e descubra o verdadeiro valor do seu veículo.</p></div><div class="etapa"><div class="circulo"><img src="../assets/img/icones/oferta.png" alt=""><b>2</b></div><h3>Fazemos a oferta</h3><p>Fazemos a oferta mais competitiva para o seu veículo. Confie em nós para obter o melhor negócio possível.</p></div><div class="etapa"><div class="circulo"><img src="../assets/img/icones/finalizamos.png" alt=""><b>3</b></div><h3>Finalizamos a compra</h3><p>Finalizamos a compra do seu carro de forma rápida e sem complicações.</p></div></div>
+</div></section>
+<section class="distingue"><div class="contentor grelha">
+  <img src="../assets/img/quem-somos-distingue.jpg" alt="">
+  <div>
+    <h2>O que nos distingue</h2>
+    <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg><div><h3>Proposta em 24 horas</h3><p>Em 24 horas irá receber uma proposta (por email ou contacto telefónico) que será válida por 7 dias úteis.</p></div></div><div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><polyline points="8.5 12 11 14.5 15.5 9.5"/></svg><div><h3>Segurança em todo o processo</h3><p>Todo o procedimento é acompanhado de documentos que comprovam e validam a transação.</p></div></div><div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7"/><line x1="7" y1="11" x2="13" y2="11"/><line x1="7" y1="13.5" x2="13" y2="13.5"/></svg><div><h3>Pagamento por transferência bancária imediata</h3><p>Para maior conforto, realizamos o pagamento por transferência bancária imediata.</p></div></div>
+  </div>
+</div></section>
+<section class="equipa"><div class="contentor">
+  <h2>A equipa</h2>
+  <div class="grelha"><div class="membro"><img src="../assets/img/equipa-francisco-matos.jpg" alt="Francisco Matos"><h3>Francisco Matos</h3></div><div class="membro"><img src="../assets/img/equipa-manuel-gama-barros.jpg" alt="Manuel Gama Barros"><h3>Manuel Gama Barros</h3></div><div class="membro"><img src="../assets/img/equipa-bernardo-soares.jpg" alt="Bernardo Soares"><h3>Bernardo Soares</h3></div></div>
+</div></section>
+
+</main>
+<footer class="rodape"><div class="contentor">
+  <div class="grelha">
+    <div class="marca"><img src="../assets/img/logo.svg" alt="Compramos Carros"><p>Uma marca desenvolvida pela MGB Automóveis.</p></div>
+    <div><h4>Navegação</h4><ul><li><a href="#">Como funciona</a></li><li><a href="#">Quem Somos</a></li><li><a href="#">Centro de Entregas</a></li><li><a href="#">Contactos</a></li></ul></div>
+    <div><h4>Contactos</h4><ul><li>Stand Automóveis MGB</li><li>Estrada Nacional 249-4 Vivenda Garcia</li><li>2785-574 S. Domingos de Rana</li><li><a href="tel:+351912263717">912 263 717</a></li></ul></div>
+    <div><h4>Informação</h4><ul><li><a href="#">Política de privacidade</a></li><li><a href="#">Política de cookies</a></li><li><a href="#">Livro de reclamações</a></li><li>Seg a Sex das 9h às 19h<br>Sábado das 10h às 18h</li></ul></div>
+  </div>
+  <p class="base">© 2026 Compramos Carros. Todos os direitos reservados.</p>
+</div></footer>
+<a class="whatsapp" href="https://wa.me/351912263717" aria-label="WhatsApp"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.5-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6.3-.5c.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg></a>
+<a class="etiqueta-proposta" href="index.html">Proposta B · Imersiva · ver outras propostas</a>
+</body>
+</html>
