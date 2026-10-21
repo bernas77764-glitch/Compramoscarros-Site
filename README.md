@@ -78,3 +78,19 @@ Para desligar as fotos basta voltar a pôr `aceitaFotos: false`.
 
 A pasta também pode ser enviada tal como está para qualquer alojamento (Netlify, Vercel,
 cPanel, …).
+
+## Pendentes
+
+- [ ] **Pixel de conversões** (adiado em 21/10/2026). Falta saber a(s) plataforma(s) (Meta,
+  Google Ads/Analytics, TikTok…) e o ID de cada pixel. A fazer:
+  - instalar o pixel em todas as páginas (gerador `ferramentas/gerar_site.py`);
+  - registar o evento de conversão **Lead** em `obrigado.html` (página aberta depois de o CRM
+    confirmar o pedido de avaliação);
+  - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
+    "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
+- [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
+  também esses contactos.
+- [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
+  pedido segue sem elas.
+- [ ] (Opcional) Apagar o ramo antigo `claude/clever-cerf-2ke3aj` no repositório
+  `Compramos-Carros`, que tem uma cópia antiga do site.
