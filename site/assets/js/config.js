@@ -11,7 +11,7 @@
  */
 window.CC_CONFIG = {
   formEndpoint: "https://leads.compramoscarros.pt/api/leads",
-  aceitaFotos: false,
+  aceitaFotos: true,
   whatsapp: "351912263717",
   telefone: "912 263 717",
   email: "comercial@compramoscarros.pt"

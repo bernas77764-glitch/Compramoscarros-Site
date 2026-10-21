@@ -195,6 +195,7 @@
           blobs.forEach(function (b, i) { dados.append("fotos", b, "foto-" + (i + 1) + ".jpg"); });
         });
       },
+      quantas: function () { return escolhidas.length; },
       limpar: function () { escolhidas = []; desenhar(); }
     };
   }
@@ -218,24 +219,40 @@
       }
 
       botao.disabled = true;
+      var textoBotao = botao.innerHTML;
+      botao.textContent = "A enviar…";
+      var assunto = form.getAttribute("data-assunto") || "Pedido através do site";
       var dados = new FormData(form);
-      dados.append("_subject", form.getAttribute("data-assunto") || "Pedido através do site");
-      (fotos ? fotos.anexar(dados) : Promise.resolve())
-        .then(function () {
-          return fetch(CFG.formEndpoint, { method: "POST", body: dados, headers: { Accept: "application/json" } });
-        })
+      dados.append("_subject", assunto);
+      var nFotos = fotos ? fotos.quantas() : 0, fotosFalharam = false;
+      var enviar = function (corpo) {
+        return fetch(CFG.formEndpoint, { method: "POST", body: corpo, headers: { Accept: "application/json" } });
+      };
+      // Se o envio com fotos falhar, o pedido segue sem elas para não se perder
+      var semFotos = function () {
+        fotosFalharam = true;
+        var d = new FormData(form);
+        d.append("_subject", assunto);
+        d.append("fotos_nao_enviadas", String(nFotos));
+        return enviar(d);
+      };
+      (nFotos ? fotos.anexar(dados) : Promise.resolve())
+        .then(function () { return enviar(dados); })
+        .then(function (r) { return !r.ok && nFotos ? semFotos() : r; },
+              function (erro) { if (nFotos) return semFotos(); throw erro; })
         .then(function (r) {
           if (!r.ok) throw new Error(r.status);
           form.reset();
           if (fotos) fotos.limpar();
           var texto = "Obrigado! Recebemos o seu pedido e entraremos em contacto o mais brevemente possível.";
-          if (pedeFotos && !fotos) mostrar(form, "sucesso", texto + " Se quiser, envie-nos fotos do carro por WhatsApp para o " + CFG.telefone + ".", WHATSAPP_FOTOS);
+          if (fotosFalharam) mostrar(form, "sucesso", texto + " Não foi possível enviar as fotos: pode enviá-las por WhatsApp para o " + CFG.telefone + ".", WHATSAPP_FOTOS);
+          else if (pedeFotos && !fotos) mostrar(form, "sucesso", texto + " Se quiser, envie-nos fotos do carro por WhatsApp para o " + CFG.telefone + ".", WHATSAPP_FOTOS);
           else mostrar(form, "sucesso", texto);
         })
         .catch(function () {
           mostrar(form, "erro", "Não foi possível enviar o pedido. Por favor ligue-nos para o " + CFG.telefone + " ou contacte-nos por WhatsApp.");
         })
-        .then(function () { botao.disabled = false; });
+        .then(function () { botao.disabled = false; botao.innerHTML = textoBotao; });
     });
   });
 })();
