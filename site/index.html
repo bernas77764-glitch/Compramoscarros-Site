@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=771c8d9a">
+<link rel="stylesheet" href="assets/css/style.css?v=6a293dd6">
 </head>
 <body>
 <header class="cabecalho">
@@ -39,37 +39,100 @@
       <div class="numeros"><div><b>24h</b><span>Proposta</span></div><div><b>7</b><span>Dias úteis de validade</span></div><div><b>Imediato</b><span>Pagamento</span></div></div>
     </div>
 
-    <form class="cartao" data-formulario data-assunto="Pedido de avaliação grátis">
-      <div class="cab"><h2><small>Marque agora</small>A avaliação do seu veículo!</h2></div>
+    <form class="cartao assistente" data-formulario data-assistente data-assunto="Pedido de avaliação grátis" novalidate>
       <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="grupo">Preencha o formulário e aproveite uma avaliação gratuita!</p>
-      <div class="campos">
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><input type="text" name="nome" placeholder="Nome" aria-label="Nome" required autocomplete="name"></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><input type="tel" name="telefone" placeholder="Telefone" aria-label="Telefone" required autocomplete="tel" inputmode="tel"></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="1"/><polyline points="2 5 12 13 22 5"/><line x1="2" y1="20" x2="9" y2="12"/><line x1="22" y1="20" x2="15" y2="12"/></svg><input type="email" name="email" placeholder="E-mail" aria-label="E-mail" required autocomplete="email"></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><select name="distrito" aria-label="Distrito" data-lista="distrito" required><option value="" disabled selected>Distrito</option></select></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg><input type="number" name="km" placeholder="KM do carro" aria-label="KM do carro" required min="0" step="1" inputmode="numeric"></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="matricula" placeholder="Matrícula do carro" aria-label="Matrícula do carro" required maxlength="8" autocapitalize="characters"></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select name="ano" aria-label="Ano do Carro" data-lista="ano" required><option value="" disabled selected>Ano do Carro</option></select></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select name="mes" aria-label="Mês do Carro" data-lista="mes" required><option value="" disabled selected>Mês do Carro</option></select></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select name="marca" aria-label="Marca do carro" data-lista="marca" required><option value="" disabled selected>Marca do carro</option></select></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select name="modelo" aria-label="Modelo do carro" data-lista="modelo" required><option value="" disabled selected>Modelo do carro</option></select></div>
-      <div class="campo largo" data-outro="marca" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="marca_outra" placeholder="Indique a marca" aria-label="Marca (outra)" required disabled></div>
-      <div class="campo largo" data-outro="modelo" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="versao" placeholder="Versão do carro" aria-label="Versão do carro" required></div>
-      <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><select name="transmissao" aria-label="Transmissão" required><option value="" disabled selected>Transmissão</option><option>Manual</option><option>Automática</option></select></div>
-      <div class="fotos largo" data-fotos hidden>
-        <label class="fotos-zona"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></svg><span><b>Fotos do carro (opcional)</b>Até 10 fotos: exterior, interior, conta-quilómetros e eventuais danos.</span><input type="file" accept="image/*" multiple aria-label="Fotos do carro"></label>
-        <div class="fotos-lista" aria-live="polite"></div>
-      </div>
-      </div>
-      <div class="consentimento">
+      <input type="hidden" name="marca" aria-label="Marca do carro">
+      <input type="hidden" name="modelo" aria-label="Modelo do carro">
+      <input type="hidden" name="ano" aria-label="Ano do Carro">
+      <input type="hidden" name="mes" aria-label="Mês do Carro">
+      <input type="hidden" name="transmissao" aria-label="Transmissão">
+      <input type="hidden" name="segmento" aria-label="Segmento">
+
+      <div class="as-cab"><span class="as-n" data-as-n>Passo 1</span><div class="as-setas" data-as-setas><button type="button" data-dir="-1" aria-label="Ver anteriores">←</button><button type="button" data-dir="1" aria-label="Ver seguintes">→</button></div></div>
+      <div class="as-barra" data-as-barra aria-hidden="true"></div>
+      <div class="as-fichas" data-as-fichas aria-live="polite"></div>
+
+      <section class="as-passo" data-passo="marca">
+        <h2>Qual é a <em>marca</em>?</h2>
+        <p class="as-ajuda">Marque agora a avaliação do seu veículo! Deslize para o lado ou pesquise.</p>
+        <label class="as-pesquisa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input type="search" data-as-pesquisa placeholder="Pesquisar marca…" aria-label="Pesquisar marca" autocomplete="off"></label>
+        <div class="as-carrossel" data-as-lista="marca" role="listbox" aria-label="Marcas"></div>
+        <div class="campo largo as-outro" data-as-outro hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="marca_outra" placeholder="Indique a marca" aria-label="Marca (outra)" required disabled></div>
+      </section>
+
+      <section class="as-passo" data-passo="modelo" hidden>
+        <h2>E o <em>modelo</em>?</h2>
+        <p class="as-ajuda" data-as-ajuda-modelo></p>
+        <label class="as-pesquisa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg><input type="search" data-as-pesquisa placeholder="Pesquisar modelo…" aria-label="Pesquisar modelo" autocomplete="off"></label>
+        <div class="as-carrossel" data-as-lista="modelo" role="listbox" aria-label="Modelos"></div>
+        <div class="campo largo as-outro" data-as-outro hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
+      </section>
+
+      <section class="as-passo" data-passo="data" hidden>
+        <h2>Quando foi <em>matriculado</em>?</h2>
+        <p class="as-ajuda">Escolha o ano e o mês da primeira matrícula.</p>
+        <p class="as-sub">Ano</p>
+        <div class="as-carrossel uma-linha as-anos" data-as-lista="ano" role="listbox" aria-label="Ano"></div>
+        <p class="as-sub">Mês</p>
+        <div class="as-meses" data-as-lista="mes" role="listbox" aria-label="Mês"></div>
+      </section>
+
+      <section class="as-passo" data-passo="caixa" hidden>
+        <h2>Tipo de <em>caixa</em></h2>
+        <div class="as-grandes" data-as-lista="transmissao" role="listbox" aria-label="Tipo de caixa"></div>
+      </section>
+
+      <section class="as-passo" data-passo="segmento" hidden>
+        <h2>Qual o <em>segmento</em>?</h2>
+        <p class="as-ajuda">Escolha o formato que mais se parece com o seu carro.</p>
+        <div class="as-grandes quatro" data-as-lista="segmento" role="listbox" aria-label="Segmento"></div>
+      </section>
+
+      <section class="as-passo" data-passo="detalhes" hidden>
+        <h2>Mais alguns <em>detalhes</em></h2>
+        <div class="campos">
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="matricula" placeholder="Matrícula do carro" aria-label="Matrícula do carro" required maxlength="8" autocapitalize="characters"></div>
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg><input type="number" name="km" placeholder="KM do carro" aria-label="KM do carro" required min="0" step="1" inputmode="numeric"></div>
+          <div class="campo largo area"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><textarea name="observacoes" placeholder="Observações (opcional): extras, estado geral, revisões, eventuais danos…" aria-label="Observações"></textarea></div>
+        </div>
+      </section>
+
+      <section class="as-passo" data-passo="fotos" hidden>
+        <h2>Mostre-nos o seu <em>carro</em></h2>
+        <p class="as-ajuda">Opcional, mas ajuda-nos a fazer uma proposta mais certa.</p>
+        <div class="fotos largo" data-fotos hidden>
+          <label class="fotos-zona"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></svg><span><b>Fotos do carro (opcional)</b>Até 10 fotos: exterior, interior, conta-quilómetros e eventuais danos.</span><input type="file" accept="image/*" multiple aria-label="Fotos do carro"></label>
+          <div class="fotos-lista" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="as-passo" data-passo="dados" hidden>
+        <h2>Os seus <em>dados</em></h2>
+        <p class="as-ajuda">Para lhe enviarmos a proposta em 24 horas.</p>
+        <div class="campos">
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><input type="text" name="nome" placeholder="Nome" aria-label="Nome" required autocomplete="name"></div>
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><input type="tel" name="telefone" placeholder="Telefone" aria-label="Telefone" required autocomplete="tel" inputmode="tel"></div>
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="1"/><polyline points="2 5 12 13 22 5"/><line x1="2" y1="20" x2="9" y2="12"/><line x1="22" y1="20" x2="15" y2="12"/></svg><input type="email" name="email" placeholder="E-mail" aria-label="E-mail" required autocomplete="email"></div>
+          <div class="campo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg><select name="distrito" aria-label="Distrito" data-lista="distrito" required><option value="" disabled selected>Distrito</option></select></div>
+        </div>
+        <div class="consentimento">
   <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados e ser contactado por telefone, e-mail ou WhatsApp"><span></span></label>
   <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para lhe responder, enviar a proposta e facilitar futuros contactos da Compramos Carros, por telefone, e-mail ou WhatsApp.<br>
   <a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>
 </div>
-      <div class="formulario-acao"><button class="botao" type="submit">Pedir avaliação grátis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg></button></div>
+      </section>
+
+      <div class="as-fim" data-as-fim hidden>
+        <span class="as-visto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="3"><polyline points="4 12 10 18 20 6"/></svg></span>
+        <h2 data-as-obrigado>Obrigado!</h2>
+      </div>
+
       <div class="mensagem-form" role="status"></div>
+      <div class="as-rodape" data-as-rodape>
+        <button class="as-voltar" type="button" data-as-voltar>← Voltar</button>
+        <button class="botao" type="button" data-as-seguinte>Seguinte <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg></button>
+        <button class="botao" type="submit" data-as-enviar hidden>Pedir avaliação grátis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" stroke-width="2.2"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg></button>
+      </div>
     </form>
   </div>
 </section>
@@ -115,5 +178,6 @@
 <script src="assets/js/config.js?v=8b27d842"></script>
 <script src="assets/js/marcas.js?v=3bb9d85a"></script>
 <script src="assets/js/main.js?v=33b8e39c"></script>
+<script src="assets/js/assistente.js?v=c7923ac7"></script>
 </body>
 </html>

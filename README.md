@@ -32,6 +32,17 @@ as que já só existem no mercado de usados). Para acrescentar uma marca ou um m
 editar esse ficheiro; o formulário ordena tudo alfabeticamente. Quem não encontrar a sua
 marca ou modelo escolhe "Outra marca" / "Outro modelo" e escreve-o num campo de texto.
 
+## Formulário de avaliação (passo a passo)
+
+A página inicial usa um formulário em passos (`site/assets/js/assistente.js`):
+marca → modelo → ano e mês → caixa → segmento → matrícula, km e observações → fotos
+(só com `aceitaFotos: true`) → dados de contacto. O envio é feito por `main.js`.
+
+Campos enviados ao CRM: `marca`, `modelo`, `marca_outra`, `modelo_outro` (quando é
+"Outra marca" / "Outro modelo"), `ano`, `mes`, `transmissao`, `segmento`, `matricula`,
+`km`, `observacoes`, `nome`, `telefone`, `email`, `distrito`, `consentimento`, `_subject`
+e, com fotos ativas, `fotos` (ficheiros).
+
 ## Formulários
 
 Configurados em `assets/js/config.js`:
