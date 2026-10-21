@@ -32,10 +32,18 @@ as que já só existem no mercado de usados). Para acrescentar uma marca ou um m
 editar esse ficheiro; o formulário ordena tudo alfabeticamente. Quem não encontrar a sua
 marca ou modelo escolhe "Outra marca" / "Outro modelo" e escreve-o num campo de texto.
 
+## Versões (submodelos)
+
+Nos modelos em que a versão muda muito o valor (BMW Série 1 → 116d, 118i…, Mercedes Classe C →
+C 200, C 220 d…), o formulário mostra um passo "Versão" depois do modelo. As versões estão em
+`site/assets/js/versoes.js` (BMW, Mercedes-Benz, Audi e Volvo; 72 modelos). Nos modelos que não
+estão nessa lista o passo é saltado. "Outra / não sei" deixa sempre avançar. Os nomes da marca e do
+modelo têm de ser iguais aos de `marcas.js`. A versão chega ao CRM no campo `versao`.
+
 ## Formulário de avaliação (passo a passo)
 
 A página inicial usa um formulário em passos (`site/assets/js/assistente.js`):
-marca → modelo → ano e mês → caixa → segmento → matrícula, km e observações → fotos
+marca → modelo → versão (só em alguns modelos) → ano e mês → caixa → segmento → matrícula, km e observações → fotos
 (só com `aceitaFotos: true`) → dados de contacto. O envio é feito por `main.js`.
 
 Campos enviados ao CRM: `marca`, `modelo`, `marca_outra`, `modelo_outro` (quando é

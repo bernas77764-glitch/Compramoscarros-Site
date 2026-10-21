@@ -417,3 +417,9 @@ main { overflow-x: clip; }
 .mt-44 { margin-top: 44px; }
 .branco { color: #fff; }
 .forte { color: var(--azul); }
+
+/* Passo "Versão" do formulário de avaliação */
+.as-versoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 9px; padding: 3px 2px 6px; }
+.as-versoes .as-tile { justify-content: center; text-align: center; min-height: 50px; }
+.as-versoes .as-tile:last-child { grid-column: 1 / -1; background: var(--fundo); }
+.as-versoes .as-tile.sel:last-child { background: var(--azul); }

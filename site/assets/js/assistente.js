@@ -1,10 +1,10 @@
 /*
  * Formulário de avaliação passo a passo (página inicial).
  *
- * Passos: marca → modelo → ano e mês → caixa → segmento → matrícula/km/observações
+ * Passos: marca → modelo → versão (só nos modelos de versoes.js) → ano e mês → caixa → segmento → matrícula/km/observações
  * → fotos (só se config.js tiver aceitaFotos) → dados de contacto.
  * As escolhas ficam em campos escondidos com os mesmos nomes do formulário antigo
- * (marca, modelo, ano, mes, transmissao) e mais "segmento" e "observacoes".
+ * (marca, modelo, versao, ano, mes, transmissao) e mais "segmento" e "observacoes".
  * O envio é feito por main.js (CRM ou WhatsApp), como nos outros formulários.
  */
 (function () {
@@ -86,8 +86,22 @@
 
   // ---------- Passos ----------
   var temFotos = !$("[data-fotos]").hidden;   // main.js mostra o bloco só se o CRM aceitar fotos
-  var PASSOS = ["marca", "modelo", "data", "caixa", "segmento", "detalhes"].concat(temFotos ? ["fotos"] : []).concat(["dados"]);
-  var atual = 0;
+  var VERSOES = window.CC_VERSOES || {}, OUTRA_VERSAO = "Outra / não sei";
+  var TODOS = ["marca", "modelo", "versao", "data", "caixa", "segmento", "detalhes", "fotos", "dados"];
+  var PASSOS = [], atual = 0;
+
+  // Versões conhecidas do modelo escolhido (versoes.js); sem versões, o passo "Versão" é saltado.
+  function versoesDoModelo() {
+    var m = VERSOES[campo("marca").value];
+    return (m && m[campo("modelo").value]) || null;
+  }
+  function atualizarPassos() {
+    var comVersao = !!versoesDoModelo();
+    if (!comVersao) campo("versao").value = "";
+    PASSOS = ["marca", "modelo"].concat(comVersao ? ["versao"] : [])
+      .concat(["data", "caixa", "segmento", "detalhes"]).concat(temFotos ? ["fotos"] : []).concat(["dados"]);
+  }
+  atualizarPassos();
 
   function seccao(id) { return $("[data-passo='" + id + "']"); }
   function outroTexto(id) { var o = $("[data-as-outro]", seccao(id)); return o ? o.querySelector("input") : null; }
@@ -104,6 +118,7 @@
     switch (id) {
       case "marca": return campo("marca").value && (campo("marca").value !== OUTRA_MARCA || outroTexto("marca").value.trim());
       case "modelo": return campo("modelo").value && (campo("modelo").value !== OUTRO_MODELO || outroTexto("modelo").value.trim());
+      case "versao": return campo("versao").value;
       case "data": return campo("ano").value && campo("mes").value;
       case "caixa": return campo("transmissao").value;
       case "segmento": return campo("segmento").value;
@@ -120,6 +135,7 @@
     var modelo = campo("modelo").value === OUTRO_MODELO ? outroTexto("modelo").value.trim() : campo("modelo").value;
     if (marca) e.push(marca);
     if (modelo) e.push(modelo);
+    if (campo("versao").value && campo("versao").value !== OUTRA_VERSAO) e.push(campo("versao").value);
     if (campo("ano").value) e.push((campo("mes").value ? campo("mes").value.slice(0, 3) + " " : "") + campo("ano").value);
     if (campo("transmissao").value) e.push(campo("transmissao").value);
     if (campo("segmento").value) e.push(campo("segmento").value);
@@ -140,7 +156,7 @@
 
   function desenhar(foco) {
     PASSOS.forEach(function (id, n) { seccao(id).hidden = n !== atual; });
-    ["marca", "modelo", "data", "caixa", "segmento", "detalhes", "fotos", "dados"].forEach(function (id) { if (PASSOS.indexOf(id) < 0) seccao(id).hidden = true; });
+    TODOS.forEach(function (id) { if (PASSOS.indexOf(id) < 0) seccao(id).hidden = true; });
     var id = PASSOS[atual];
     $("[data-as-n]").textContent = "Passo " + (atual + 1) + " de " + PASSOS.length;
     $("[data-as-barra]").innerHTML = PASSOS.map(function (_, n) { return '<i class="' + (n < atual ? "feito" : n === atual ? "atual" : "") + '"></i>'; }).join("");
@@ -171,22 +187,35 @@
 
   $("[data-as-lista='marca']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    if (campo("marca").value !== b.dataset.v) { campo("modelo").value = ""; mostrarOutro("modelo", false); }
+    if (campo("marca").value !== b.dataset.v) { campo("modelo").value = ""; campo("versao").value = ""; mostrarOutro("modelo", false); }
     escolher("marca", b.dataset.v);
     var outra = b.dataset.v === OUTRA_MARCA;
     mostrarOutro("marca", outra);
     var modelos = MARCAS[b.dataset.v] ? ordenar(MARCAS[b.dataset.v]) : [];
     encher("modelo", modelos.concat([OUTRO_MODELO]).map(function (m) { return { v: m }; }));
     $("[data-as-ajuda-modelo]").textContent = outra ? "Indique o modelo do seu carro." : "Modelos " + b.dataset.v + ". Deslize para o lado ou pesquise.";
+    atualizarPassos();
     if (outra) { escolher("modelo", OUTRO_MODELO); mostrarOutro("modelo", true); outroTexto("marca").focus(); }
     else avancarDepois();
   });
   $("[data-as-lista='modelo']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
+    if (campo("modelo").value !== b.dataset.v) campo("versao").value = "";
     escolher("modelo", b.dataset.v);
+    atualizarPassos();
+    var versoes = versoesDoModelo();
+    if (versoes) {
+      encher("versao", versoes.concat([OUTRA_VERSAO]).map(function (v) { return { v: v }; }));
+      $("[data-as-ajuda-versao]").textContent = "Versões " + campo("marca").value + " " + b.dataset.v + '. Se não souber, escolha "' + OUTRA_VERSAO + '".';
+    }
     var outro = b.dataset.v === OUTRO_MODELO;
     mostrarOutro("modelo", outro);
     if (outro) outroTexto("modelo").focus(); else avancarDepois();
+  });
+  $("[data-as-lista='versao']").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    escolher("versao", b.dataset.v);
+    avancarDepois();
   });
   $("[data-as-lista='ano']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
