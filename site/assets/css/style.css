@@ -411,3 +411,9 @@ main { overflow-x: clip; }
 .campo.area { position: relative; }
 .contador { position: absolute; right: 26px; bottom: 8px; font-size: 12px; font-weight: 600; color: var(--suave); pointer-events: none; }
 .contador.limite { color: var(--laranja-escuro); }
+
+/* Utilitários (em vez de estilos escritos nas páginas, por causa da política de segurança) */
+.mt-30 { margin-top: 30px; }
+.mt-44 { margin-top: 44px; }
+.branco { color: #fff; }
+.forte { color: var(--azul); }

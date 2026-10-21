@@ -13,6 +13,30 @@ DOMINIO = "https://compramoscarros.pt"
 EMAIL = "comercial@compramoscarros.pt"
 
 
+def origem_crm():
+    """Origem do endereço formEndpoint de config.js (para a política de segurança)."""
+    import re
+    m = re.search(r'formEndpoint:\s*"(https://[^/"]+)', (OUT / "assets/js/config.js").read_text(encoding="utf-8"))
+    return m.group(1) if m else ""
+
+
+# Política de segurança (CSP) e de referrer, em <meta> porque o GitHub Pages não permite
+# configurar cabeçalhos HTTP. Se mudar de alojamento, passe-as para cabeçalhos.
+def politica_seguranca():
+    return "; ".join([
+        "default-src 'none'",
+        "script-src 'self'",
+        "style-src 'self' https://fonts.googleapis.com",
+        "font-src https://fonts.gstatic.com",
+        "img-src 'self' data: blob:",
+        "connect-src " + (origem_crm() or "'none'"),
+        "frame-src https://www.google.com https://maps.google.com",
+        "form-action 'self'",
+        "base-uri 'none'",
+        "upgrade-insecure-requests",
+    ])
+
+
 def versao(caminho):
     """Impressão digital do ficheiro, para o navegador não usar uma versão antiga em cache."""
     return hashlib.sha1((OUT / caminho).read_bytes()).hexdigest()[:8]
@@ -58,6 +82,8 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="{politica_seguranca()}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{titulo}</title>
 <meta name="description" content="{descricao}">{"" if indexar else chr(10) + '<meta name="robots" content="noindex, nofollow">'}
 <link rel="canonical" href="{canonical}">
@@ -324,7 +350,7 @@ como = f"""
     <div class="criterios">{crit_html}</div>
     <p class="nota">Caso haja incertezas ou se suspeitar que o seu veículo possa não cumprir com estes critérios, por favor mencione isso ao inserir os dados do seu carro para avaliação.</p>
     <p class="nota">*Se o seu carro estiver sob financiamento, também estamos aptos a adquiri-lo. Nesse caso, solicitaremos o valor de quitação à instituição financeira e cuidaremos de todo o processo, mediante a sua autorização. O pagamento será realizado por meio de ajuste de contas.</p>
-    <p class="centro" style="margin-top:30px"><a class="botao" href="index.html#avaliacao">Peça a sua avaliação grátis {I["seta"]}</a></p>
+    <p class="centro mt-30"><a class="botao" href="index.html#avaliacao">Peça a sua avaliação grátis {I["seta"]}</a></p>
   </div>
 </section>
 
@@ -346,7 +372,7 @@ como = f"""
       <p class="n-seccao">04</p>
       <h2>Conclusão da <span>venda</span></h2>
       <p>Após a verificação do veículo e a conclusão do acordo referente ao valor de transação, será pedida uma Certidão do veículo para verificar se o mesmo está apto para o processo de transferência de propriedade. Todo o processo será verificado e devidamente documentado (com cópias de todos os documentos)</p>
-      <p><b style="color:#fff">O pagamento será efectuado por transferência bancária imediata</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b style="color:#fff">O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
+      <p><b class="branco">O pagamento será efectuado por transferência bancária imediata</b>, sendo necessário o NIB (Número de Identificação Bancária) ou SPIN (Identificador para derivação de Conta). <b class="branco">O processo de transferência de registo de propriedade, será efectuado no máximo em 48H.</b></p>
       <p>Com este processo concluído evitamos todos os problemas que por vezes sucedem na venda a particulares (multas, portagens sem pagamento, IUC’s sem pagamento, etc)</p>
     </div>
     <div class="imagem"><img src="assets/img/como-funciona-conclusao.jpg" alt="Verificação de um carro antes da compra" width="651" height="428" loading="lazy"></div>
@@ -383,7 +409,7 @@ quem = f"""
 <section class="seccao cinza">
   <div class="contentor">
     <h2 class="titulo">A <span>equipa</span></h2>
-    <p class="intro"><b style="color:var(--azul)">A nossa força reside na equipa dedicada e disponível!</b> Cada um de nós, com nossa experiência única e paixão pelo negócio, esforça-se para lhe proporcionar a experiência mais tranquila e confortável no processo de venda do seu carro.</p>
+    <p class="intro"><b class="forte">A nossa força reside na equipa dedicada e disponível!</b> Cada um de nós, com nossa experiência única e paixão pelo negócio, esforça-se para lhe proporcionar a experiência mais tranquila e confortável no processo de venda do seu carro.</p>
     <div class="equipa">{equipa_html}</div>
   </div>
 </section>
@@ -406,7 +432,7 @@ pagina("quem-somos.html", "Quem Somos - Compramos Carros",
        quem, "quem-somos.html")
 
 # ------------------------------------------------------------------ Centro de entregas
-MAPA = f"""<div class="mapa"><iframe src="{MAPA_EMBED}" title="Mapa — Stand Automóveis MGB, São Domingos de Rana" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>"""
+MAPA = f"""<div class="mapa"><iframe src="{MAPA_EMBED}" title="Mapa — Stand Automóveis MGB, São Domingos de Rana" loading="lazy" allowfullscreen></iframe></div>"""
 centro = f"""
 {heroi("Centro de entregas", 'Centro de <span class="lima">entregas</span>', "Bem-vindo ao Centro de Entrega, onde oferecemos um atendimento excepcional para garantir sua total satisfação.")}
 
@@ -564,7 +590,7 @@ obrigado = f"""
       <div class="etapa"><div class="n">02</div><img src="assets/img/icones/avaliamos.png" alt="" width="60" height="60"><h3>Inspeção e entrega</h3><p>Quando receber o email com a nossa proposta, agende directamente no nosso calendário a inspeção final e entrega do seu veículo.</p></div>
       <div class="etapa"><div class="n">03</div><img src="assets/img/icones/finalizamos.png" alt="" width="60" height="60"><h3>Pagamento imediato</h3><p>Para maior conforto, realizamos o pagamento por transferência bancária imediata.</p></div>
     </div>
-    <p style="margin-top:44px"><a class="botao" href="como-funciona.html">Saiba como funciona {I["seta"]}</a></p>
+    <p class="mt-44"><a class="botao" href="como-funciona.html">Saiba como funciona {I["seta"]}</a></p>
   </div>
 </section>
 """

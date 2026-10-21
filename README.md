@@ -88,6 +88,10 @@ cPanel, …).
     confirmar o pedido de avaliação);
   - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
     "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
+- [ ] **Cabeçalhos de segurança (HTTP Observatory)**: o GitHub Pages não permite cabeçalhos
+  HTTP. A CSP e a Referrer-Policy estão em `<meta>` (gerador); faltam HSTS, X-Frame-Options
+  (ou `frame-ancestors`) e X-Content-Type-Options, que exigem pôr o site atrás do Cloudflare
+  (proxy + regras de cabeçalhos) ou mudar o alojamento para Cloudflare Pages (`_headers`).
 - [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
   também esses contactos.
 - [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
