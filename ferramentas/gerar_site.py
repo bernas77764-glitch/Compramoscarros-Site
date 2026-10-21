@@ -6,6 +6,7 @@ corra  python3 ferramentas/gerar_site.py  para atualizar os .html.
 """
 from pathlib import Path
 import hashlib
+import re
 
 OUT = Path(__file__).resolve().parent.parent / "site"
 DOMINIO = "https://compramoscarros.pt"
@@ -20,8 +21,8 @@ def origem_crm():
     return m.group(1) if m else ""
 
 
-# Política de segurança (CSP) e de referrer, em <meta> porque o GitHub Pages não permite
-# configurar cabeçalhos HTTP. Se mudar de alojamento, passe-as para cabeçalhos.
+# Política de segurança (CSP) e de referrer: vão em <meta> nas páginas e também como
+# cabeçalhos HTTP em site/_headers (lido pelo Cloudflare).
 def politica_seguranca():
     return "; ".join([
         "default-src 'none'",
@@ -35,6 +36,13 @@ def politica_seguranca():
         "base-uri 'none'",
         "upgrade-insecure-requests",
     ])
+
+
+def sem_html(html):
+    """Links internos sem ".html": o Cloudflare serve /pagina a partir de pagina.html
+    e reencaminharia /pagina.html para /pagina, o que custa um pedido extra."""
+    html = re.sub(r'(href|data-obrigado)="index\.html(#[^"]*)?"', lambda m: f'{m.group(1)}="/{m.group(2) or ""}"', html)
+    return re.sub(r'(href|data-obrigado)="([a-z0-9-]+)\.html(#[^"]*)?"', lambda m: f'{m.group(1)}="{m.group(2)}{m.group(3) or ""}"', html)
 
 
 def versao(caminho):
@@ -76,7 +84,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
     menu = "".join(
         f'<li><a href="{href}"{" aria-current=\"page\"" if href == atual else ""}>{nome}</a></li>'
         for href, nome in MENU)
-    canonical = DOMINIO + "/" + ("" if ficheiro == "index.html" else ficheiro)
+    canonical = DOMINIO + "/" + ("" if ficheiro == "index.html" else ficheiro[:-5])
     html = f"""<!doctype html>
 <html lang="pt-PT">
 <head>
@@ -141,7 +149,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
 </body>
 </html>
 """
-    (OUT / ficheiro).write_text(html, encoding="utf-8")
+    (OUT / ficheiro).write_text(sem_html(html), encoding="utf-8")
 
 AVISO_DADOS = """<div class="consentimento">
   <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados e ser contactado por telefone, e-mail ou WhatsApp"><span></span></label>
@@ -608,20 +616,19 @@ pagina("404.html", "Página não encontrada - Compramos Carros", "Página não e
 p = OUT / "404.html"
 s = p.read_text(encoding="utf-8")
 for a in ['href="', 'src="']:
-    for alvo in ["assets/", "index.html", "como-funciona", "quem-somos", "centro-de", "contactos", "politica-de", "favicon"]:
+    for alvo in ["assets/", "como-funciona", "quem-somos", "centro-de", "contactos", "politica-de", "favicon"]:
         s = s.replace(a + alvo, a + "/" + alvo)
 p.write_text(s, encoding="utf-8")
 
 # ------------------------------------------------------------------ SEO / alojamento
-paginas = ["", "como-funciona.html", "quem-somos.html", "centro-de-entregas.html", "contactos.html",
-           "politica-de-privacidade.html", "politica-de-cookies.html"]
+paginas = ["", "como-funciona", "quem-somos", "centro-de-entregas", "contactos",
+           "politica-de-privacidade", "politica-de-cookies"]
 (OUT / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + "".join(f"  <url><loc>{DOMINIO}/{p}</loc></url>\n" for p in paginas) + "</urlset>\n", encoding="utf-8")
 (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {DOMINIO}/sitemap.xml\n", encoding="utf-8")
-(OUT / "CNAME").write_text("compramoscarros.pt\n", encoding="utf-8")
 
-# Cabeçalhos de segurança para o Cloudflare Pages (o GitHub Pages ignora este ficheiro).
+# Cabeçalhos de segurança, lidos pelo Cloudflare (ficheiros estáticos do Worker).
 # A CSP é a mesma das páginas, mais frame-ancestors, que só funciona como cabeçalho.
 (OUT / "_headers").write_text(f"""/*
   Content-Security-Policy: {politica_seguranca()}; frame-ancestors 'none'

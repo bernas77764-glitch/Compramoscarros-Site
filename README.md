@@ -65,19 +65,18 @@ automaticamente sem fotos e com o campo `fotos_nao_enviadas` (número de fotos),
 cliente é convidado a enviá-las por WhatsApp. Assim nenhuma lead se perde.
 Para desligar as fotos basta voltar a pôr `aceitaFotos: false`.
 
-## Publicar em compramoscarros.pt (GitHub Pages)
+## Publicação (Cloudflare)
 
-1. Garantir que as alterações estão no ramo `main`.
-2. No GitHub: **Settings → Pages → Source: GitHub Actions**. O workflow
-   `.github/workflows/site.yml` publica a pasta `site/` a cada alteração.
-3. Em **Settings → Pages → Custom domain** escrever `compramoscarros.pt` e ativar
-   **Enforce HTTPS**.
-4. No painel do registo do domínio, criar os registos DNS:
-   - `A` em `@` para `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - `CNAME` em `www` para `bernas77764-glitch.github.io`
+O site é publicado pelo Cloudflare (Workers com ficheiros estáticos), ligado a este
+repositório: cada alteração no ramo `main` é publicada automaticamente em 1 a 2 minutos.
 
-A pasta também pode ser enviada tal como está para qualquer alojamento (Netlify, Vercel,
-cPanel, …).
+- `wrangler.jsonc`: publica a pasta `site/` e usa `404.html` para endereços inexistentes.
+- `site/_headers`: cabeçalhos de segurança (CSP, HSTS, X-Frame-Options, …), gerado por
+  `ferramentas/gerar_site.py`.
+- Os endereços das páginas não têm ".html" (`/como-funciona`); o Cloudflare serve-os a
+  partir de `como-funciona.html` e reencaminha os endereços antigos com ".html".
+- Domínios `compramoscarros.pt` e `www.compramoscarros.pt` ligados em
+  Workers & Pages → compramoscarros-site → Domains.
 
 ## Pendentes
 
@@ -88,10 +87,8 @@ cPanel, …).
     confirmar o pedido de avaliação);
   - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
     "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
-- [ ] **Cabeçalhos de segurança (HTTP Observatory)**: o GitHub Pages não permite cabeçalhos
-  HTTP. A CSP e a Referrer-Policy estão em `<meta>` (gerador); faltam HSTS, X-Frame-Options
-  (ou `frame-ancestors`) e X-Content-Type-Options, que exigem pôr o site atrás do Cloudflare
-  (proxy + regras de cabeçalhos) ou mudar o alojamento para Cloudflare Pages (`_headers`).
+- [ ] **Mudança para o Cloudflare**: ligar os domínios no Worker, confirmar o formulário e
+  voltar a correr o HTTP Observatory; depois desligar o GitHub Pages em Settings → Pages.
 - [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
   também esses contactos.
 - [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
