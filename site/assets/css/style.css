@@ -406,3 +406,8 @@ main { overflow-x: clip; }
 .aviso-fotos .ico svg { width: 24px; height: 24px; }
 .aviso-fotos div { flex: 1; min-width: 220px; color: var(--texto); }
 .aviso-fotos b { color: var(--azul); }
+
+/* Contador de caracteres das observações */
+.campo.area { position: relative; }
+.contador { position: absolute; right: 26px; bottom: 8px; font-size: 12px; font-weight: 600; color: var(--suave); pointer-events: none; }
+.contador.limite { color: var(--laranja-escuro); }

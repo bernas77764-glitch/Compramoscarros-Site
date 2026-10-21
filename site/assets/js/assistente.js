@@ -225,6 +225,12 @@
   // Campos de texto: atualizam o botão "Seguinte"; Enter avança
   form.addEventListener("input", function (ev) {
     if (ev.target.name === "matricula") ev.target.value = ev.target.value.toUpperCase();
+    if (ev.target.name === "observacoes") {
+      var max = ev.target.maxLength, n = ev.target.value.length;
+      var contador = $("[data-as-contador]");
+      contador.textContent = n + "/" + max;
+      contador.classList.toggle("limite", n >= max);
+    }
     fichas();
     atualizarBotoes();
   });

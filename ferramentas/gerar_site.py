@@ -229,7 +229,7 @@ inicio = f"""
         <div class="campos">
           {campo("car", entrada("matricula", "Matrícula do carro", extra=' maxlength="8" autocapitalize="characters"'))}
           {campo("gauge", entrada("km", "KM do carro", "number", ' min="0" step="1" inputmode="numeric"'))}
-          <div class="campo largo area">{I["msg"]}<textarea name="observacoes" placeholder="Observações (opcional): extras, estado geral, revisões, eventuais danos…" aria-label="Observações"></textarea></div>
+          <div class="campo largo area">{I["msg"]}<textarea name="observacoes" maxlength="100" placeholder="Observações (opcional): extras, estado geral, revisões, eventuais danos…" aria-label="Observações (máximo 100 caracteres)"></textarea><span class="contador" data-as-contador aria-live="polite">0/100</span></div>
         </div>
       </section>
 
