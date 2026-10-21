@@ -102,6 +102,8 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
   do formulário de avaliação, com o nome do passo). Política de cookies atualizada.
   Outros pixels (Google Ads/Analytics, TikTok…) seguem o mesmo modelo e precisam de ser
   acrescentados à política de segurança (`politica_seguranca()` no gerador).
+  Para testar: Meta Events Manager → pixel → "Testar eventos" (ou a extensão oficial da Meta),
+  aceitar os cookies no site e confirmar PageView, AvaliacaoPasso e, com um pedido de teste, Lead.
 - [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
   desligado, "Always Use HTTPS" ativo. HTTP Observatory: **A+ (135/100)** (antes D, 30/100).
 - [x] Google Search Console (21/10/2026): propriedade de domínio compramoscarros.pt verificada,
