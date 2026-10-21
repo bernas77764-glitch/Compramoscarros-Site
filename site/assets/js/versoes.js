@@ -87,3 +87,25 @@ window.CC_VERSOES = {
     "EX30": ["Single Motor", "Single Motor Extended Range", "Twin Motor Performance"]
   }
 };
+
+/*
+ * Níveis de equipamento (trim) por marca, para o passo "Nível de equipamento" do formulário.
+ * Juntam designações de várias gerações. O passo só aparece nas marcas desta lista; o cliente pode
+ * sempre escolher "Outro / não sei". Os nomes das marcas têm de ser iguais aos de marcas.js.
+ */
+window.CC_EQUIPAMENTOS = {
+  "BMW": ["Pack M / M Sport", "M Sport Pro", "Sport Line", "Luxury Line", "Modern Line", "xLine", "Advantage", "Urban Line", "Base"],
+  "Mercedes-Benz": ["AMG Line", "Avantgarde", "Elegance", "Exclusive", "Progressive", "Style", "Urban", "Classic", "Base"],
+  "Audi": ["S line", "Black Line", "Sport", "Design", "Advanced", "Business Line", "Ambition", "Attraction", "Ambiente", "Base"],
+  "Volvo": ["R-Design", "Inscription", "Momentum", "Kinetic", "Summum", "Ultimate", "Plus", "Core", "Business"],
+  "Volkswagen": ["R-Line", "Highline", "Comfortline", "Trendline", "Style", "Life", "Advance", "GTI", "GTD", "GTE"],
+  "Skoda": ["Sportline", "Style", "Ambition", "Active", "Scout", "RS", "Laurin & Klement"],
+  "Seat": ["FR", "Xcellence", "Style", "Reference", "Xperience"],
+  "Peugeot": ["GT", "GT Line", "Allure", "Active", "Style", "Access"],
+  "Renault": ["RS Line", "GT Line", "Esprit Alpine", "Initiale Paris", "Iconic", "Techno", "Evolution", "Intens", "Limited", "Zen", "Life"],
+  "Citroën": ["Shine", "Max", "Feel", "Plus", "C-Series", "You", "Live"],
+  "Toyota": ["GR Sport", "Luxury", "Lounge", "Square Collection", "Exclusive", "Style", "Comfort", "Active"],
+  "Opel": ["GS Line", "Ultimate", "Elegance", "Innovation", "Edition", "Enjoy", "Selection"],
+  "Ford": ["ST", "ST-Line X", "ST-Line", "Vignale", "Titanium", "Active", "Connected", "Business", "Trend"],
+  "Nissan": ["N-Design", "Tekna+", "Tekna", "N-Connecta", "Acenta", "Visia"]
+};

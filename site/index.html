@@ -46,6 +46,8 @@
       <input type="hidden" name="marca" aria-label="Marca do carro">
       <input type="hidden" name="modelo" aria-label="Modelo do carro">
       <input type="hidden" name="versao" aria-label="Versão do carro">
+      <input type="hidden" name="versao_motor" aria-label="Motorização">
+      <input type="hidden" name="nivel_equipamento" aria-label="Nível de equipamento">
       <input type="hidden" name="ano" aria-label="Ano do Carro">
       <input type="hidden" name="mes" aria-label="Mês do Carro">
       <input type="hidden" name="transmissao" aria-label="Transmissão">
@@ -74,7 +76,13 @@
       <section class="as-passo" data-passo="versao" hidden>
         <h2>Qual é a <em>versão</em>?</h2>
         <p class="as-ajuda" data-as-ajuda-versao>Escolha a motorização. Se não souber, escolha "Outra / não sei".</p>
-        <div class="as-versoes" data-as-lista="versao" role="listbox" aria-label="Versões"></div>
+        <div class="as-versoes" data-as-lista="versao_motor" role="listbox" aria-label="Versões"></div>
+      </section>
+
+      <section class="as-passo" data-passo="equipamento" hidden>
+        <h2>Nível de <em>equipamento</em></h2>
+        <p class="as-ajuda" data-as-ajuda-equipamento>Por exemplo Pack M, AMG Line, S line ou Sportline. Se não souber, escolha "Outro / não sei".</p>
+        <div class="as-versoes" data-as-lista="nivel_equipamento" role="listbox" aria-label="Níveis de equipamento"></div>
       </section>
 
       <section class="as-passo" data-passo="data" hidden>
@@ -186,8 +194,8 @@
 
 <script src="assets/js/config.js?v=82864ac3"></script>
 <script src="assets/js/marcas.js?v=3bb9d85a"></script>
-<script src="assets/js/versoes.js?v=81f7f4f7"></script>
+<script src="assets/js/versoes.js?v=7a4a7460"></script>
 <script src="assets/js/main.js?v=232dcb19"></script>
-<script src="assets/js/assistente.js?v=f6e8ac23"></script>
+<script src="assets/js/assistente.js?v=cc862cda"></script>
 </body>
 </html>

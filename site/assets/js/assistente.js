@@ -1,10 +1,13 @@
 /*
  * Formulário de avaliação passo a passo (página inicial).
  *
- * Passos: marca → modelo → versão (só nos modelos de versoes.js) → ano e mês → caixa → segmento → matrícula/km/observações
+ * Passos: marca → modelo → versão (só nos modelos de versoes.js) → nível de equipamento (só nas
+ * marcas de versoes.js) → ano e mês → caixa → segmento → matrícula/km/observações
  * → fotos (só se config.js tiver aceitaFotos) → dados de contacto.
  * As escolhas ficam em campos escondidos com os mesmos nomes do formulário antigo
  * (marca, modelo, versao, ano, mes, transmissao) e mais "segmento" e "observacoes".
+ * "versao" junta a motorização e o nível de equipamento ("118d · Pack M / M Sport"), que também
+ * seguem em separado em "versao_motor" e "nivel_equipamento".
  * O envio é feito por main.js (CRM ou WhatsApp), como nos outros formulários.
  */
 (function () {
@@ -87,7 +90,8 @@
   // ---------- Passos ----------
   var temFotos = !$("[data-fotos]").hidden;   // main.js mostra o bloco só se o CRM aceitar fotos
   var VERSOES = window.CC_VERSOES || {}, OUTRA_VERSAO = "Outra / não sei";
-  var TODOS = ["marca", "modelo", "versao", "data", "caixa", "segmento", "detalhes", "fotos", "dados"];
+  var EQUIPAMENTOS = window.CC_EQUIPAMENTOS || {}, OUTRO_EQUIPAMENTO = "Outro / não sei";
+  var TODOS = ["marca", "modelo", "versao", "equipamento", "data", "caixa", "segmento", "detalhes", "fotos", "dados"];
   var PASSOS = [], atual = 0;
 
   // Versões conhecidas do modelo escolhido (versoes.js); sem versões, o passo "Versão" é saltado.
@@ -95,11 +99,21 @@
     var m = VERSOES[campo("marca").value];
     return (m && m[campo("modelo").value]) || null;
   }
+  function equipamentosDaMarca() { return EQUIPAMENTOS[campo("marca").value] || null; }
   function atualizarPassos() {
-    var comVersao = !!versoesDoModelo();
-    if (!comVersao) campo("versao").value = "";
-    PASSOS = ["marca", "modelo"].concat(comVersao ? ["versao"] : [])
+    var comVersao = !!versoesDoModelo(), comEquipamento = !!equipamentosDaMarca();
+    if (!comVersao) campo("versao_motor").value = "";
+    if (!comEquipamento) campo("nivel_equipamento").value = "";
+    comporVersao();
+    PASSOS = ["marca", "modelo"].concat(comVersao ? ["versao"] : []).concat(comEquipamento ? ["equipamento"] : [])
       .concat(["data", "caixa", "segmento", "detalhes"]).concat(temFotos ? ["fotos"] : []).concat(["dados"]);
+  }
+  // "versao" (o campo que o CRM mostra) junta a motorização e o nível de equipamento
+  function comporVersao() {
+    var partes = [];
+    if (campo("versao_motor").value && campo("versao_motor").value !== OUTRA_VERSAO) partes.push(campo("versao_motor").value);
+    if (campo("nivel_equipamento").value && campo("nivel_equipamento").value !== OUTRO_EQUIPAMENTO) partes.push(campo("nivel_equipamento").value);
+    campo("versao").value = partes.join(" · ");
   }
   atualizarPassos();
 
@@ -118,7 +132,8 @@
     switch (id) {
       case "marca": return campo("marca").value && (campo("marca").value !== OUTRA_MARCA || outroTexto("marca").value.trim());
       case "modelo": return campo("modelo").value && (campo("modelo").value !== OUTRO_MODELO || outroTexto("modelo").value.trim());
-      case "versao": return campo("versao").value;
+      case "versao": return campo("versao_motor").value;
+      case "equipamento": return campo("nivel_equipamento").value;
       case "data": return campo("ano").value && campo("mes").value;
       case "caixa": return campo("transmissao").value;
       case "segmento": return campo("segmento").value;
@@ -135,7 +150,7 @@
     var modelo = campo("modelo").value === OUTRO_MODELO ? outroTexto("modelo").value.trim() : campo("modelo").value;
     if (marca) e.push(marca);
     if (modelo) e.push(modelo);
-    if (campo("versao").value && campo("versao").value !== OUTRA_VERSAO) e.push(campo("versao").value);
+    if (campo("versao").value) e.push(campo("versao").value);
     if (campo("ano").value) e.push((campo("mes").value ? campo("mes").value.slice(0, 3) + " " : "") + campo("ano").value);
     if (campo("transmissao").value) e.push(campo("transmissao").value);
     if (campo("segmento").value) e.push(campo("segmento").value);
@@ -183,11 +198,14 @@
   function avancarDepois() { setTimeout(avancar, 230); }
 
   // ---------- Escolhas ----------
-  function escolher(nome, valor) { campo(nome).value = valor; marcarEscolhido(nome); fichas(); atualizarBotoes(); }
+  function escolher(nome, valor) { campo(nome).value = valor; marcarEscolhido(nome); comporVersao(); fichas(); atualizarBotoes(); }
 
   $("[data-as-lista='marca']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    if (campo("marca").value !== b.dataset.v) { campo("modelo").value = ""; campo("versao").value = ""; mostrarOutro("modelo", false); }
+    if (campo("marca").value !== b.dataset.v) {
+      campo("modelo").value = ""; campo("versao_motor").value = ""; campo("nivel_equipamento").value = "";
+      mostrarOutro("modelo", false);
+    }
     escolher("marca", b.dataset.v);
     var outra = b.dataset.v === OUTRA_MARCA;
     mostrarOutro("marca", outra);
@@ -195,26 +213,33 @@
     encher("modelo", modelos.concat([OUTRO_MODELO]).map(function (m) { return { v: m }; }));
     $("[data-as-ajuda-modelo]").textContent = outra ? "Indique o modelo do seu carro." : "Modelos " + b.dataset.v + ". Deslize para o lado ou pesquise.";
     atualizarPassos();
+    var niveis = equipamentosDaMarca();
+    if (niveis) encher("nivel_equipamento", niveis.concat([OUTRO_EQUIPAMENTO]).map(function (v) { return { v: v }; }));
     if (outra) { escolher("modelo", OUTRO_MODELO); mostrarOutro("modelo", true); outroTexto("marca").focus(); }
     else avancarDepois();
   });
   $("[data-as-lista='modelo']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    if (campo("modelo").value !== b.dataset.v) campo("versao").value = "";
+    if (campo("modelo").value !== b.dataset.v) campo("versao_motor").value = "";
     escolher("modelo", b.dataset.v);
     atualizarPassos();
     var versoes = versoesDoModelo();
     if (versoes) {
-      encher("versao", versoes.concat([OUTRA_VERSAO]).map(function (v) { return { v: v }; }));
+      encher("versao_motor", versoes.concat([OUTRA_VERSAO]).map(function (v) { return { v: v }; }));
       $("[data-as-ajuda-versao]").textContent = "Versões " + campo("marca").value + " " + b.dataset.v + '. Se não souber, escolha "' + OUTRA_VERSAO + '".';
     }
     var outro = b.dataset.v === OUTRO_MODELO;
     mostrarOutro("modelo", outro);
     if (outro) outroTexto("modelo").focus(); else avancarDepois();
   });
-  $("[data-as-lista='versao']").addEventListener("click", function (ev) {
+  $("[data-as-lista='versao_motor']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    escolher("versao", b.dataset.v);
+    escolher("versao_motor", b.dataset.v);
+    avancarDepois();
+  });
+  $("[data-as-lista='nivel_equipamento']").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    escolher("nivel_equipamento", b.dataset.v);
     avancarDepois();
   });
   $("[data-as-lista='ano']").addEventListener("click", function (ev) {

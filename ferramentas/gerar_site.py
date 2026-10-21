@@ -144,7 +144,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
 
 <script src="assets/js/config.js?v={versao("assets/js/config.js")}"></script>
 {f'<script src="assets/js/marcas.js?v={versao("assets/js/marcas.js")}"></script>' if 'data-as-lista="marca"' in corpo else ""}
-{f'<script src="assets/js/versoes.js?v={versao("assets/js/versoes.js")}"></script>' if 'data-as-lista="versao"' in corpo else ""}
+{f'<script src="assets/js/versoes.js?v={versao("assets/js/versoes.js")}"></script>' if 'data-as-lista="versao_motor"' in corpo else ""}
 <script src="assets/js/main.js?v={versao("assets/js/main.js")}"></script>
 {f'<script src="assets/js/assistente.js?v={versao("assets/js/assistente.js")}"></script>' if 'data-assistente' in corpo else ""}
 </body>
@@ -215,6 +215,8 @@ inicio = f"""
       <input type="hidden" name="marca" aria-label="Marca do carro">
       <input type="hidden" name="modelo" aria-label="Modelo do carro">
       <input type="hidden" name="versao" aria-label="Versão do carro">
+      <input type="hidden" name="versao_motor" aria-label="Motorização">
+      <input type="hidden" name="nivel_equipamento" aria-label="Nível de equipamento">
       <input type="hidden" name="ano" aria-label="Ano do Carro">
       <input type="hidden" name="mes" aria-label="Mês do Carro">
       <input type="hidden" name="transmissao" aria-label="Transmissão">
@@ -243,7 +245,13 @@ inicio = f"""
       <section class="as-passo" data-passo="versao" hidden>
         <h2>Qual é a <em>versão</em>?</h2>
         <p class="as-ajuda" data-as-ajuda-versao>Escolha a motorização. Se não souber, escolha "Outra / não sei".</p>
-        <div class="as-versoes" data-as-lista="versao" role="listbox" aria-label="Versões"></div>
+        <div class="as-versoes" data-as-lista="versao_motor" role="listbox" aria-label="Versões"></div>
+      </section>
+
+      <section class="as-passo" data-passo="equipamento" hidden>
+        <h2>Nível de <em>equipamento</em></h2>
+        <p class="as-ajuda" data-as-ajuda-equipamento>Por exemplo Pack M, AMG Line, S line ou Sportline. Se não souber, escolha "Outro / não sei".</p>
+        <div class="as-versoes" data-as-lista="nivel_equipamento" role="listbox" aria-label="Níveis de equipamento"></div>
       </section>
 
       <section class="as-passo" data-passo="data" hidden>
