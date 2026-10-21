@@ -397,3 +397,12 @@ main { overflow-x: clip; }
   .as-meses { grid-template-columns: repeat(4, 1fr); }
   .as-setas { display: none; }
 }
+
+/* Página de agradecimento */
+[data-obrigado-pagina] h1 { color: var(--lima); }
+.aviso-fotos { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: #fff6f2; border: 2px solid #ffd9cc; border-radius: 6px 22px 6px 22px; padding: 18px 20px; margin-bottom: 50px; }
+.aviso-fotos[hidden] { display: none; }
+.aviso-fotos .ico { flex: 0 0 44px; width: 44px; height: 44px; border-radius: 10px; background: var(--laranja); color: #fff; display: grid; place-items: center; }
+.aviso-fotos .ico svg { width: 24px; height: 24px; }
+.aviso-fotos div { flex: 1; min-width: 220px; color: var(--texto); }
+.aviso-fotos b { color: var(--azul); }

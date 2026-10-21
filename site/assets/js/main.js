@@ -18,6 +18,15 @@
     el.textContent = new Date().getFullYear();
   });
 
+  // ---------- Página de agradecimento ----------
+  if (document.querySelector("[data-obrigado-pagina]")) {
+    var dadosObrigado = {};
+    try { dadosObrigado = JSON.parse(sessionStorage.getItem("cc_obrigado") || "{}"); } catch (e) {}
+    if (dadosObrigado.nome) document.querySelector("[data-obrigado-nome]").textContent = "Obrigado, " + dadosObrigado.nome + "!";
+    if (dadosObrigado.viatura) document.querySelector("[data-obrigado-viatura]").textContent = "do seu " + dadosObrigado.viatura;
+    if (dadosObrigado.fotosFalharam || /[?&]fotos=nao-enviadas/.test(location.search)) document.querySelector("[data-obrigado-fotos]").hidden = false;
+  }
+
   // ---------- Aviso de cookies ----------
   var cookies = document.querySelector(".cookies");
   if (cookies) {
@@ -242,6 +251,18 @@
               function (erro) { if (nFotos) return semFotos(); throw erro; })
         .then(function (r) {
           if (!r.ok) throw new Error(r.status);
+          if (form.getAttribute("data-obrigado")) {
+            // Página própria de agradecimento (permite medir a conversão, por exemplo com um pixel)
+            var el = form.elements, v = function (n) { return el[n] && !el[n].disabled ? el[n].value.trim() : ""; };
+            var marca = v("marca_outra") || v("marca"), modelo = v("modelo_outro") || v("modelo");
+            try {
+              sessionStorage.setItem("cc_obrigado", JSON.stringify({
+                nome: v("nome").split(" ")[0], viatura: [marca, modelo, v("ano")].filter(Boolean).join(" "), fotosFalharam: fotosFalharam
+              }));
+            } catch (e) {}
+            window.location.assign(form.getAttribute("data-obrigado") + (fotosFalharam ? "?fotos=nao-enviadas" : ""));
+            return;
+          }
           form.reset();
           if (fotos) fotos.limpar();
           var texto = "Obrigado! Recebemos o seu pedido e entraremos em contacto o mais brevemente possível.";

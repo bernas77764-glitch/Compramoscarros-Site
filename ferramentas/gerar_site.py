@@ -48,7 +48,7 @@ I = {
 MENU = [("como-funciona.html", "Como funciona"), ("quem-somos.html", "Quem Somos"),
         ("centro-de-entregas.html", "Centro de Entregas"), ("contactos.html", "Contactos")]
 
-def pagina(ficheiro, titulo, descricao, corpo, atual=None):
+def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
     menu = "".join(
         f'<li><a href="{href}"{" aria-current=\"page\"" if href == atual else ""}>{nome}</a></li>'
         for href, nome in MENU)
@@ -59,7 +59,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{titulo}</title>
-<meta name="description" content="{descricao}">
+<meta name="description" content="{descricao}">{"" if indexar else chr(10) + '<meta name="robots" content="noindex, nofollow">'}
 <link rel="canonical" href="{canonical}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{titulo}">
@@ -175,7 +175,7 @@ inicio = f"""
       <div class="numeros"><div><b>24h</b><span>Proposta</span></div><div><b>7</b><span>Dias úteis de validade</span></div><div><b>Imediato</b><span>Pagamento</span></div></div>
     </div>
 
-    <form class="cartao assistente" data-formulario data-assistente data-assunto="Pedido de avaliação grátis" novalidate>
+    <form class="cartao assistente" data-formulario data-assistente data-obrigado="obrigado.html" data-assunto="Pedido de avaliação grátis" novalidate>
       <input class="armadilha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
       <input type="hidden" name="marca" aria-label="Marca do carro">
       <input type="hidden" name="modelo" aria-label="Modelo do carro">
@@ -541,6 +541,36 @@ pagina("politica-de-cookies.html", "Política de Cookies - Compramos Carros",
        "Política de Cookies do site Compramos Carros.", cookies)
 
 # ------------------------------------------------------------------ 404
+# ------------------------------------------------------------------ Obrigado (depois do pedido de avaliação)
+obrigado = f"""
+<section class="heroi pagina" data-obrigado-pagina>
+  <div class="contentor">
+    <span class="rotulo">Pedido enviado</span>
+    <h1><span data-obrigado-nome>Obrigado!</span></h1>
+    <p class="sub">Recebemos o pedido de avaliação <span data-obrigado-viatura>do seu carro</span>. <b>Em 24 horas irá receber uma proposta</b> (por email ou contacto telefónico).</p>
+  </div>
+</section>
+
+<section class="seccao colada">
+  <div class="contentor">
+    <div class="aviso-fotos" data-obrigado-fotos hidden>
+      <span class="ico">{I["camera"]}</span>
+      <div><b>Não foi possível enviar as fotos.</b> O seu pedido chegou, mas sem as fotos. Pode enviá-las por WhatsApp para o 912 263 717.</div>
+      <a class="botao" href="https://wa.me/351912263717" target="_blank" rel="noopener">Enviar fotos por WhatsApp</a>
+    </div>
+    <h2 class="titulo">E agora, <span>o que acontece?</span></h2>
+    <div class="etapas">
+      <div class="etapa"><div class="n">01</div><img src="assets/img/icones/oferta.png" alt="" width="60" height="60"><h3>Recebe a proposta</h3><p>Em 24 horas irá receber uma proposta (por email ou contacto telefónico) que será válida por 7 dias úteis.</p></div>
+      <div class="etapa"><div class="n">02</div><img src="assets/img/icones/avaliamos.png" alt="" width="60" height="60"><h3>Inspeção e entrega</h3><p>Quando receber o email com a nossa proposta, agende directamente no nosso calendário a inspeção final e entrega do seu veículo.</p></div>
+      <div class="etapa"><div class="n">03</div><img src="assets/img/icones/finalizamos.png" alt="" width="60" height="60"><h3>Pagamento imediato</h3><p>Para maior conforto, realizamos o pagamento por transferência bancária imediata.</p></div>
+    </div>
+    <p style="margin-top:44px"><a class="botao" href="como-funciona.html">Saiba como funciona {I["seta"]}</a></p>
+  </div>
+</section>
+"""
+pagina("obrigado.html", "Obrigado - Compramos Carros",
+       "Recebemos o seu pedido de avaliação. Em 24 horas irá receber uma proposta.", obrigado, indexar=False)
+
 erro = f"""
 {heroi("Erro 404", 'Página não <span class="lima">encontrada</span>', "A página que procura não existe ou foi movida.")}
 <section class="seccao colada"><div class="contentor">
