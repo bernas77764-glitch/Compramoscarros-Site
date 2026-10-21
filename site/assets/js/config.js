@@ -14,5 +14,5 @@ window.CC_CONFIG = {
   aceitaFotos: false,
   whatsapp: "351912263717",
   telefone: "912 263 717",
-  email: "comercial@compramos-carros.com"
+  email: "comercial@compramoscarros.pt"
 };

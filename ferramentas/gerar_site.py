@@ -10,7 +10,7 @@ import hashlib
 OUT = Path(__file__).resolve().parent.parent / "site"
 DOMINIO = "https://compramoscarros.pt"
 # Email de contacto mostrado em Contactos e na Política de privacidade.
-EMAIL = "comercial@compramos-carros.com"
+EMAIL = "comercial@compramoscarros.pt"
 
 
 def versao(caminho):
