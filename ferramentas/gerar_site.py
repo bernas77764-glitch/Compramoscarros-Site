@@ -158,6 +158,12 @@ AVISO_DADOS = """<div class="consentimento">
   <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para lhe responder, enviar a proposta e facilitar futuros contactos da Compramos Carros, por telefone, e-mail ou WhatsApp.<br>
   <a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>
 </div>"""
+# No formulário de avaliação: informa também que a viatura pode ser avaliada por parceiros.
+AVISO_DADOS_AVALIACAO = """<div class="consentimento">
+  <label class="interruptor"><input type="checkbox" name="consentimento" required aria-label="Aceito o tratamento dos meus dados e ser contactado por telefone, e-mail ou WhatsApp"><span></span></label>
+  <p class="aviso-dados">Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor, apenas para lhe responder, enviar a proposta e facilitar futuros contactos da Compramos Carros, por telefone, e-mail ou WhatsApp. Para lhe fazermos a melhor proposta, os dados e as fotografias da viatura (sem o seu nome nem os seus contactos) podem ser avaliados por comerciantes nossos parceiros.<br>
+  <a href="politica-de-privacidade.html">Para saber mais sobre a nossa Política de Privacidade clique aqui.</a></p>
+</div>"""
 
 def campo(icone, html):
     return f'<div class="campo">{I[icone]}{html}</div>'
@@ -302,7 +308,7 @@ inicio = f"""
           {campo("mail", entrada("email", "E-mail", "email", ' autocomplete="email"'))}
           {campo("pin", escolha("distrito", "Distrito", "distrito"))}
         </div>
-        {AVISO_DADOS}
+        {AVISO_DADOS_AVALIACAO}
       </section>
 
       <div class="as-fim" data-as-fim hidden>
@@ -555,6 +561,7 @@ privacidade = f"""
       <li><b>Avaliar a viatura e enviar-lhe a proposta de compra</b> por e-mail, telefone ou WhatsApp — diligências pré-contratuais a seu pedido (RGPD, art. 6.º, n.º 1, alínea b);</li>
       <li><b>Marcar, alterar ou cancelar a inspeção da viatura</b> e enviar-lhe a confirmação — diligências pré-contratuais (alínea b);</li>
       <li><b>Concluir a compra da viatura</b> e cumprir obrigações fiscais, contabilísticas e de registo automóvel — execução do contrato e obrigação legal (alíneas b e c);</li>
+      <li><b>Obter avaliações da viatura junto de comerciantes parceiros</b>, para preparar a proposta de compra — diligências pré-contratuais e interesse legítimo em obter o melhor valor (alíneas b e f);</li>
       <li><b>Responder às suas mensagens e pedidos de contacto</b> — diligências pré-contratuais ou interesse legítimo em responder (alíneas b e f);</li>
       <li><b>Proteger o site e os formulários</b> contra abusos e envios automáticos — interesse legítimo na segurança (alínea f).</li>
     </ul>
@@ -569,6 +576,7 @@ privacidade = f"""
       <li><b>Meta Platforms (WhatsApp)</b> — envio da proposta e troca de mensagens por WhatsApp, quando usado;</li>
       <li><b>GitHub, Inc.</b> — alojamento das páginas públicas do site.</li>
     </ul>
+    <p><b>Comerciantes parceiros:</b> para avaliar a viatura, podemos partilhar com comerciantes de automóveis nossos parceiros, obrigados a confidencialidade, os dados da viatura (marca, modelo, versão, data da matrícula, quilómetros, parte da matrícula e distrito) e as fotografias que escolhermos. <b>Nunca partilhamos o seu nome, os seus contactos nem as mensagens que nos enviou.</b></p>
     <p>Alguns destes prestadores podem tratar dados fora da União Europeia, nomeadamente nos Estados Unidos. Nesses casos, a transferência está protegida pelo Quadro de Privacidade de Dados UE-EUA (EU-U.S. Data Privacy Framework) ou por cláusulas contratuais-tipo aprovadas pela Comissão Europeia.</p>
     <p>Os dados podem ainda ser comunicados a entidades públicas quando a lei o exija (por exemplo, a Autoridade Tributária ou o registo automóvel, no caso de uma compra).</p>
 
