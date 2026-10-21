@@ -89,8 +89,9 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
     "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
 - [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
   desligado, "Always Use HTTPS" ativo. HTTP Observatory: **A+ (135/100)** (antes D, 30/100).
-- [ ] (Opcional) Redirecionar www.compramoscarros.pt para compramoscarros.pt (Cloudflare →
-  Rules → Redirect Rules).
+- [x] www.compramoscarros.pt redireciona (301) para compramoscarros.pt, mantendo o caminho e
+  os parâmetros (Cloudflare → compramoscarros.pt → Rules → Redirect Rules). O domínio www
+  tem de continuar ligado ao Worker para o redirecionamento funcionar.
 - [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
   também esses contactos.
 - [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
