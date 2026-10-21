@@ -327,6 +327,8 @@ main { overflow-x: clip; }
 .fotos-lista figure { position: relative; margin: 0; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--fundo); }
 .fotos-lista img { width: 100%; height: 100%; object-fit: cover; }
 .fotos-lista button { position: absolute; top: 4px; right: 4px; width: 24px; height: 24px; border: 0; border-radius: 50%; background: rgba(46, 41, 78, .85); color: #fff; font: 700 15px/1 "Barlow", sans-serif; cursor: pointer; }
+.fotos-lista figure.a-preparar { background: linear-gradient(90deg, var(--fundo) 0%, #e9e8ef 50%, var(--fundo) 100%); background-size: 200% 100%; animation: a-preparar 1.2s linear infinite; }
+@keyframes a-preparar { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 .fotos-aviso { grid-column: 1 / -1; font-size: 12.5px; color: var(--laranja-escuro); margin: 0; }
 .mensagem-form a { color: inherit; font-weight: 800; }
 

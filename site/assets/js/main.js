@@ -175,19 +175,28 @@
   // ---------- Fotos do carro (só com um formEndpoint que aceite ficheiros) ----------
   var MAX_FOTOS = 10, LADO_MAX = 1600;
 
+  // Reduz uma foto para no máximo LADO_MAX px (JPEG). No iPhone as fotos têm 12 a 48 megapíxeis:
+  // abri-las em tamanho original, várias ao mesmo tempo, esgota a memória e o Safari fecha a página.
+  // Por isso cada foto é reduzida uma de cada vez, logo que é escolhida, e só a versão reduzida
+  // fica em memória (também para as miniaturas). O canvas é libertado no fim.
   function reduzir(ficheiro) {
     return new Promise(function (resolve) {
       var img = new Image(), url = URL.createObjectURL(ficheiro);
+      var fim = function (blob) { URL.revokeObjectURL(url); img.src = ""; resolve(blob); };
       img.onload = function () {
-        var escala = Math.min(1, LADO_MAX / Math.max(img.width, img.height));
-        var c = document.createElement("canvas");
-        c.width = Math.round(img.width * escala);
-        c.height = Math.round(img.height * escala);
-        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
-        URL.revokeObjectURL(url);
-        c.toBlob(function (blob) { resolve(blob || ficheiro); }, "image/jpeg", 0.82);
+        try {
+          var w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+          var escala = Math.min(1, LADO_MAX / Math.max(w, h));
+          var c = document.createElement("canvas");
+          c.width = Math.max(1, Math.round(w * escala));
+          c.height = Math.max(1, Math.round(h * escala));
+          c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+          c.toBlob(function (blob) { c.width = c.height = 0; fim(blob && blob.size ? blob : ficheiro); }, "image/jpeg", 0.82);
+        } catch (e) {
+          fim(ficheiro);
+        }
       };
-      img.onerror = function () { URL.revokeObjectURL(url); resolve(ficheiro); };
+      img.onerror = function () { fim(ficheiro); };
       img.src = url;
     });
   }
@@ -198,24 +207,38 @@
     bloco.hidden = false;
     var input = bloco.querySelector("input[type='file']");
     var lista = bloco.querySelector(".fotos-lista");
-    var escolhidas = [];
+    var escolhidas = [];   // fotos já reduzidas
+    var pendentes = 0;     // fotos escolhidas ainda a reduzir
+    var urls = [];
+    var fila = Promise.resolve();
+    var aviso = "";
 
-    function desenhar(aviso) {
+    function desenhar() {
+      urls.forEach(function (u) { URL.revokeObjectURL(u); });
+      urls = [];
       lista.innerHTML = "";
       escolhidas.forEach(function (f, i) {
         var fig = document.createElement("figure");
         var img = document.createElement("img");
-        img.src = URL.createObjectURL(f);
+        var u = URL.createObjectURL(f);
+        urls.push(u);
+        img.src = u;
         img.alt = "Foto " + (i + 1);
         var tirar = document.createElement("button");
         tirar.type = "button";
         tirar.textContent = "×";
         tirar.setAttribute("aria-label", "Remover foto " + (i + 1));
-        tirar.addEventListener("click", function () { escolhidas.splice(i, 1); desenhar(); });
+        tirar.addEventListener("click", function () { escolhidas.splice(i, 1); aviso = ""; desenhar(); });
         fig.appendChild(img);
         fig.appendChild(tirar);
         lista.appendChild(fig);
       });
+      for (var i = 0; i < pendentes; i++) {
+        var fig = document.createElement("figure");
+        fig.className = "a-preparar";
+        fig.setAttribute("aria-label", "A preparar foto");
+        lista.appendChild(fig);
+      }
       if (aviso) {
         var p = document.createElement("p");
         p.className = "fotos-aviso";
@@ -225,21 +248,30 @@
     }
 
     input.addEventListener("change", function () {
-      var novas = Array.prototype.filter.call(input.files, function (f) { return /^image\//.test(f.type); });
-      var livres = MAX_FOTOS - escolhidas.length;
-      escolhidas = escolhidas.concat(novas.slice(0, livres));
+      var novas = Array.prototype.filter.call(input.files, function (f) { return /^image\//.test(f.type) || /\.(heic|heif)$/i.test(f.name); });
+      var livres = MAX_FOTOS - escolhidas.length - pendentes;
+      var aceites = novas.slice(0, Math.max(0, livres));
       input.value = "";
-      desenhar(novas.length > livres ? "Só é possível enviar até " + MAX_FOTOS + " fotos." : "");
+      aviso = novas.length > livres ? "Só é possível enviar até " + MAX_FOTOS + " fotos." : "";
+      pendentes += aceites.length;
+      desenhar();
+      aceites.forEach(function (f) {
+        fila = fila.then(function () { return reduzir(f); }).then(function (b) {
+          escolhidas.push(b);
+          pendentes--;
+          desenhar();
+        });
+      });
     });
 
     return {
       anexar: function (dados) {
-        return Promise.all(escolhidas.map(reduzir)).then(function (blobs) {
-          blobs.forEach(function (b, i) { dados.append("fotos", b, "foto-" + (i + 1) + ".jpg"); });
+        return fila.then(function () {
+          escolhidas.forEach(function (b, i) { dados.append("fotos", b, "foto-" + (i + 1) + ".jpg"); });
         });
       },
-      quantas: function () { return escolhidas.length; },
-      limpar: function () { escolhidas = []; desenhar(); }
+      quantas: function () { return escolhidas.length + pendentes; },
+      limpar: function () { escolhidas = []; aviso = ""; desenhar(); }
     };
   }
 

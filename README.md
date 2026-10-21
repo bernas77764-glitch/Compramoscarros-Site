@@ -75,7 +75,9 @@ Configurados em `assets/js/config.js`:
 ### Fotos do carro
 
 Ligadas (`aceitaFotos: true` em `assets/js/config.js`): o passo "Fotos" do formulário de
-avaliação aceita até 10 fotos, reduzidas no navegador para no máximo 1600 px (JPEG) e
+avaliação aceita até 10 fotos, reduzidas no navegador para no máximo 1600 px (JPEG), uma de
+cada vez e logo que são escolhidas (no iPhone, abrir várias fotos em tamanho original esgotava a
+memória e o Safari fechava a página), e
 enviadas ao CRM no campo `fotos` (`multipart/form-data`, ficheiros `foto-1.jpg`, …).
 
 Se o envio com fotos falhar (erro do CRM ou da ligação), o pedido é reenviado
