@@ -94,13 +94,14 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
 
 ## Pendentes
 
-- [ ] **Pixel de conversões** (adiado em 21/10/2026). Falta saber a(s) plataforma(s) (Meta,
-  Google Ads/Analytics, TikTok…) e o ID de cada pixel. A fazer:
-  - instalar o pixel em todas as páginas (gerador `ferramentas/gerar_site.py`);
-  - registar o evento de conversão **Lead** em `obrigado.html` (página aberta depois de o CRM
-    confirmar o pedido de avaliação);
-  - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
-    "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
+- [x] **Meta Pixel** (21/10/2026), ID 1312328063221205, em `site/assets/js/pixel.js`. Só arranca
+  depois de o visitante carregar em "Aceitar" no aviso de cookies (que agora também tem "Recusar";
+  a escolha fica em `localStorage` `cc_cookies_v2` e pode ser mudada em "Preferências de cookies",
+  no rodapé). Eventos: **PageView** (todas as páginas), **Lead** (página Obrigado, uma vez por
+  pedido), **Contact** (formulário de contactos) e **AvaliacaoPasso** (personalizado, a cada passo
+  do formulário de avaliação, com o nome do passo). Política de cookies atualizada.
+  Outros pixels (Google Ads/Analytics, TikTok…) seguem o mesmo modelo e precisam de ser
+  acrescentados à política de segurança (`politica_seguranca()` no gerador).
 - [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
   desligado, "Always Use HTTPS" ativo. HTTP Observatory: **A+ (135/100)** (antes D, 30/100).
 - [x] Google Search Console (21/10/2026): propriedade de domínio compramoscarros.pt verificada,

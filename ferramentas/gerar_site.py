@@ -26,11 +26,11 @@ def origem_crm():
 def politica_seguranca():
     return "; ".join([
         "default-src 'none'",
-        "script-src 'self'",
+        "script-src 'self' https://connect.facebook.net",
         "style-src 'self' https://fonts.googleapis.com",
         "font-src https://fonts.gstatic.com",
-        "img-src 'self' data: blob:",
-        "connect-src " + (origem_crm() or "'none'"),
+        "img-src 'self' data: blob: https://www.facebook.com",
+        "connect-src " + " ".join(filter(None, [origem_crm(), "https://www.facebook.com", "https://connect.facebook.net"])),
         "frame-src https://www.google.com https://maps.google.com",
         "form-action 'self'",
         "base-uri 'none'",
@@ -129,7 +129,7 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
       <div class="marca"><img src="assets/img/logo.svg" alt="Compramos Carros" width="200" height="48" loading="lazy"><p>Uma marca desenvolvida pela MGB Automóveis.</p></div>
       <div><h4>Navegação</h4><ul>{"".join(f'<li><a href="{h}">{n}</a></li>' for h, n in MENU)}</ul></div>
       <div><h4>Contactos</h4><ul><li>Stand Automóveis MGB</li><li>Estrada Nacional 249-4 Vivenda Garcia</li><li>2785-574 S. Domingos de Rana</li><li><a href="tel:+351912263717">912 263 717</a></li><li><a href="mailto:{EMAIL}">{EMAIL}</a></li></ul></div>
-      <div><h4>Informação</h4><ul><li><a href="politica-de-privacidade.html">Política de privacidade</a></li><li><a href="politica-de-cookies.html">Política de cookies</a></li><li><a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de reclamações</a></li><li>Seg a Sex das 9h às 19h<br>Sábado das 10h às 18h</li></ul></div>
+      <div><h4>Informação</h4><ul><li><a href="politica-de-privacidade.html">Política de privacidade</a></li><li><a href="politica-de-cookies.html">Política de cookies</a></li><li><a href="#" data-preferencias-cookies>Preferências de cookies</a></li><li><a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener">Livro de reclamações</a></li><li>Seg a Sex das 9h às 19h<br>Sábado das 10h às 18h</li></ul></div>
     </div>
     <p class="base">© <span data-ano>2026</span> Compramos Carros. Todos os direitos reservados.</p>
   </div>
@@ -138,11 +138,12 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
 <a class="whatsapp" href="https://wa.me/351912263717" target="_blank" rel="noopener" aria-label="Entre em contacto por WhatsApp">{I["whats"]}<span>Entre em contacto</span></a>
 
 <div class="cookies" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
-  <p>Utilizamos cookies para melhorar a sua experiência no nosso site. Saiba mais na nossa <a href="politica-de-cookies.html">Política de cookies</a>.</p>
-  <button class="botao" type="button">Aceitar</button>
+  <p>Utilizamos cookies para melhorar a sua experiência e, se aceitar, cookies da Meta (Facebook e Instagram) para medir e melhorar os nossos anúncios. Saiba mais na nossa <a href="politica-de-cookies.html">Política de cookies</a>.</p>
+  <div class="cookies-botoes"><button class="botao" type="button" data-cookies="aceite">Aceitar</button><button class="botao secundario" type="button" data-cookies="recusado">Recusar</button></div>
 </div>
 
 <script src="assets/js/config.js?v={versao("assets/js/config.js")}"></script>
+<script src="assets/js/pixel.js?v={versao("assets/js/pixel.js")}"></script>
 {f'<script src="assets/js/marcas.js?v={versao("assets/js/marcas.js")}"></script>' if 'data-as-lista="marca"' in corpo else ""}
 {f'<script src="assets/js/versoes.js?v={versao("assets/js/versoes.js")}"></script>' if 'data-as-lista="versao_motor"' in corpo else ""}
 <script src="assets/js/main.js?v={versao("assets/js/main.js")}"></script>
@@ -626,6 +627,9 @@ cookies = f"""
     <h2>Como usamos os cookies?</h2>
     <p>Um cookie é um arquivo que é instalado no computador quando se acede a determinadas páginas na Internet. Os Cookies que utilizamos são os seguintes:</p>
     <ul>{"".join(f"<li><b>{t}:</b> {d}</li>" for t, d in COOKIES)}</ul>
+    <h2>Meta Pixel (Facebook e Instagram)</h2>
+    <p>Se aceitar os cookies, o site carrega o Meta Pixel, da Meta Platforms Ireland Ltd. Serve para medirmos a eficácia dos nossos anúncios no Facebook e no Instagram (por exemplo, quantas pessoas que viram um anúncio pediram depois uma avaliação) e para mostrar anúncios a quem já visitou o site. São registadas as páginas visitadas, os passos do formulário de avaliação concluídos e o envio de pedidos, nunca o conteúdo dos campos que preenche (nome, telefone, email, matrícula). A Meta pode instalar os cookies <b>_fbp</b> (até 3 meses) e <b>fr</b> (até 3 meses). Mais informação na <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Política de Privacidade da Meta</a>.</p>
+    <p>Se recusar, o Meta Pixel não é carregado. Pode mudar a sua escolha a qualquer momento em <a href="#" data-preferencias-cookies>Preferências de cookies</a>, no rodapé de todas as páginas. A sua escolha é guardada apenas no seu navegador.</p>
   </div>
 </section>
 """

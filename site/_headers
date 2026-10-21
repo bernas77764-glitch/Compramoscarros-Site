@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://leads.compramoscarros.pt; frame-src https://www.google.com https://maps.google.com; form-action 'self'; base-uri 'none'; upgrade-insecure-requests; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://connect.facebook.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://www.facebook.com; connect-src https://leads.compramoscarros.pt https://www.facebook.com https://connect.facebook.net; frame-src https://www.google.com https://maps.google.com; form-action 'self'; base-uri 'none'; upgrade-insecure-requests; frame-ancestors 'none'
   Strict-Transport-Security: max-age=31536000
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

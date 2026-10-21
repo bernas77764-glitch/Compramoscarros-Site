@@ -182,6 +182,7 @@
     void seccao(id).offsetWidth;
     seccao(id).classList.add("entrar");
     if (foco) {
+      if (window.ccPixel) window.ccPixel.evento("trackCustom", "AvaliacaoPasso", { passo: id, numero: atual + 1 });
       var alvo = $("h2", seccao(id));
       alvo.setAttribute("tabindex", "-1");
       alvo.focus({ preventScroll: true });

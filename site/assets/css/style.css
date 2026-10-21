@@ -305,6 +305,9 @@ main { overflow-x: clip; }
 .cookies p { margin: 0 0 12px; }
 .cookies a { color: var(--verde); }
 .cookies .botao { padding: 11px 22px; font-size: 13px; }
+.cookies-botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+.cookies .botao.secundario { background: transparent; color: var(--azul); box-shadow: inset 0 0 0 2px #cfd2da; }
+.cookies .botao.secundario:hover { background: #f1f2f5; transform: none; box-shadow: inset 0 0 0 2px var(--azul); }
 @media (max-width: 560px) { .cookies { right: 96px; left: 12px; bottom: 12px; } }
 .campo[hidden] { display: none; }
 

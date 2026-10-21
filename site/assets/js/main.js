@@ -27,15 +27,29 @@
     if (dadosObrigado.fotosFalharam || /[?&]fotos=nao-enviadas/.test(location.search)) document.querySelector("[data-obrigado-fotos]").hidden = false;
   }
 
-  // ---------- Aviso de cookies ----------
+  // ---------- Aviso de cookies (o Meta Pixel só arranca se o visitante aceitar) ----------
   var cookies = document.querySelector(".cookies");
   if (cookies) {
-    var aceite = false;
-    try { aceite = localStorage.getItem("cc_cookies") === "1"; } catch (e) {}
-    if (!aceite) cookies.classList.add("visivel");
-    cookies.querySelector("button").addEventListener("click", function () {
-      try { localStorage.setItem("cc_cookies", "1"); } catch (e) {}
-      cookies.classList.remove("visivel");
+    var CHAVE = window.ccPixel ? window.ccPixel.chave : "cc_cookies_v2";
+    var escolha = null;
+    try { escolha = localStorage.getItem(CHAVE); } catch (e) {}
+    if (!escolha) cookies.classList.add("visivel");
+    cookies.querySelectorAll("[data-cookies]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var valor = b.getAttribute("data-cookies");
+        try { localStorage.setItem(CHAVE, valor); } catch (e) {}
+        cookies.classList.remove("visivel");
+        if (valor === "aceite" && window.ccPixel) window.ccPixel.carregar();
+        // Retirar o consentimento: recarregar para o pixel deixar de correr
+        if (valor === "recusado" && window.fbq) location.reload();
+      });
+    });
+    document.querySelectorAll("[data-preferencias-cookies]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        cookies.classList.add("visivel");
+        cookies.querySelector("[data-cookies]").focus();
+      });
     });
   }
 
@@ -256,6 +270,7 @@
             var el = form.elements, v = function (n) { return el[n] && !el[n].disabled ? el[n].value.trim() : ""; };
             var marca = v("marca_outra") || v("marca"), modelo = v("modelo_outro") || v("modelo");
             try {
+              sessionStorage.removeItem("cc_lead_contado");
               sessionStorage.setItem("cc_obrigado", JSON.stringify({
                 nome: v("nome").split(" ")[0], viatura: [marca, modelo, v("ano")].filter(Boolean).join(" "), fotosFalharam: fotosFalharam
               }));
@@ -263,6 +278,7 @@
             window.location.assign(form.getAttribute("data-obrigado") + (fotosFalharam ? "?fotos=nao-enviadas" : ""));
             return;
           }
+          if (window.ccPixel) window.ccPixel.evento("track", "Contact");
           form.reset();
           if (fotos) fotos.limpar();
           var texto = "Obrigado! Recebemos o seu pedido e entraremos em contacto o mais brevemente possível.";
