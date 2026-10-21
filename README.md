@@ -87,8 +87,8 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
     confirmar o pedido de avaliação);
   - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
     "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
-- [ ] **Mudança para o Cloudflare**: ligar os domínios no Worker, confirmar o formulário e
-  voltar a correr o HTTP Observatory; depois desligar o GitHub Pages em Settings → Pages.
+- [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
+  desligado. Falta confirmar a nota no HTTP Observatory (esperado A/A+).
 - [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
   também esses contactos.
 - [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
