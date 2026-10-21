@@ -1,0 +1,11 @@
+// Publicação do site no Cloudflare (Workers com ficheiros estáticos).
+// O Cloudflare publica a pasta site/ a cada alteração no ramo main.
+// Os cabeçalhos de segurança estão em site/_headers (gerado por ferramentas/gerar_site.py).
+{
+  "name": "compramoscarros-site",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page"
+  }
+}
