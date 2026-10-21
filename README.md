@@ -51,6 +51,8 @@ separado em `versao_motor` e `nivel_equipamento`. "Outra / não sei" não entra 
 A página inicial usa um formulário em passos (`site/assets/js/assistente.js`):
 marca → modelo → versão (só em alguns modelos) → nível de equipamento (só em algumas marcas) → ano e mês → caixa → segmento → matrícula, km e observações → fotos
 (só com `aceitaFotos: true`) → dados de contacto. O envio é feito por `main.js`.
+A matrícula é formatada ao escrever (maiúsculas e hífens, `main.js`) e só aceita os formatos
+portugueses AA-00-00, 00-00-AA, 00-AA-00 e AA-00-AA (atributo `pattern` no gerador).
 Marcas, modelos e anos aparecem em cartões numa caixa com scroll vertical (classe `.as-carrossel`
 em `style.css`: altura em `max-height`, colunas em `grid-template-columns`).
 

@@ -137,7 +137,7 @@
       case "data": return campo("ano").value && campo("mes").value;
       case "caixa": return campo("transmissao").value;
       case "segmento": return campo("segmento").value;
-      case "detalhes": return campo("matricula").value.trim() && campo("km").value.trim();
+      case "detalhes": return campo("matricula").value && campo("matricula").checkValidity() && campo("km").value.trim();
       case "fotos": return true;
       case "dados": return ["nome", "telefone", "email", "distrito"].every(function (n) { return campo(n).value.trim(); }) && campo("consentimento").checked;
     }
@@ -279,7 +279,6 @@
 
   // Campos de texto: atualizam o botão "Seguinte"; Enter avança
   form.addEventListener("input", function (ev) {
-    if (ev.target.name === "matricula") ev.target.value = ev.target.value.toUpperCase();
     if (ev.target.name === "observacoes") {
       var max = ev.target.maxLength, n = ev.target.value.length;
       var contador = $("[data-as-contador]");

@@ -284,8 +284,9 @@ inicio = f"""
       <section class="as-passo" data-passo="detalhes" hidden>
         <h2>Mais alguns <em>detalhes</em></h2>
         <div class="campos">
-          {campo("car", entrada("matricula", "Matrícula do carro", extra=' maxlength="8" autocapitalize="characters"'))}
+          {campo("car", entrada("matricula", "Matrícula (ex.: AA-00-AA)", extra=' maxlength="8" autocapitalize="characters" autocomplete="off" spellcheck="false" pattern="[A-Z]{2}-[0-9]{2}-[0-9]{2}|[0-9]{2}-[0-9]{2}-[A-Z]{2}|[0-9]{2}-[A-Z]{2}-[0-9]{2}|[A-Z]{2}-[0-9]{2}-[A-Z]{2}"'))}
           {campo("gauge", entrada("km", "KM do carro", "number", ' min="0" step="1" inputmode="numeric"'))}
+          <p class="campo-erro largo" data-matricula-erro hidden>Matrícula inválida. Só aceitamos matrículas portuguesas: <b>AA-00-00</b>, <b>00-00-AA</b>, <b>00-AA-00</b> ou <b>AA-00-AA</b>.</p>
           <div class="campo largo area">{I["msg"]}<textarea name="observacoes" maxlength="100" placeholder="Observações (opcional): extras, estado geral, revisões, eventuais danos…" aria-label="Observações (máximo 100 caracteres)"></textarea><span class="contador" data-as-contador aria-live="polite">0/100</span></div>
         </div>
       </section>

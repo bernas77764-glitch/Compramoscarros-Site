@@ -118,10 +118,30 @@
     });
   }
 
-  // A matrícula é guardada em maiúsculas (AA-00-AA)
+  // Matrícula portuguesa: maiúsculas e hífens automáticos (AA-00-AA); só aceita os formatos
+  // AA-00-00, 00-00-AA, 00-AA-00 e AA-00-AA (atributo pattern no HTML)
   var matricula = document.querySelector("input[name='matricula']");
   if (matricula) {
-    matricula.addEventListener("input", function () { matricula.value = matricula.value.toUpperCase(); });
+    var erroMatricula = document.querySelector("[data-matricula-erro]");
+    var MSG_MATRICULA = "Indique uma matrícula portuguesa: AA-00-00, 00-00-AA, 00-AA-00 ou AA-00-AA.";
+    var validarMatricula = function (mostrar) {
+      matricula.setCustomValidity("");
+      var invalida = matricula.value !== "" && !matricula.checkValidity();
+      if (invalida) matricula.setCustomValidity(MSG_MATRICULA);
+      if (erroMatricula) erroMatricula.hidden = !(invalida && (mostrar || matricula.value.length === 8));
+    };
+    matricula.addEventListener("input", function () {
+      var v = matricula.value, pos = matricula.selectionStart || v.length;
+      var antes = v.slice(0, pos).toUpperCase().replace(/[^A-Z0-9]/g, "").length;
+      var limpo = v.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+      var novo = (limpo.match(/.{1,2}/g) || []).join("-");
+      matricula.value = novo;
+      // Mantém o cursor no mesmo carácter (os hífens não contam)
+      var c = Math.min(antes, limpo.length), p = c + Math.max(0, Math.ceil(c / 2) - 1) + (c && c % 2 === 0 && c < limpo.length ? 1 : 0);
+      if (document.activeElement === matricula) matricula.setSelectionRange(p, p);
+      validarMatricula(false);
+    });
+    matricula.addEventListener("blur", function () { validarMatricula(true); });
   }
 
   // ---------- Envio dos formulários ----------

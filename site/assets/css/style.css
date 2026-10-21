@@ -134,6 +134,9 @@ main { overflow-x: clip; }
 
 .campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .campos .largo { grid-column: 1 / -1; }
+.campo-erro { margin: -4px 0 0; font-size: 13.5px; font-weight: 600; color: var(--laranja-escuro); }
+.campo-erro[hidden] { display: none; }
+.campo-erro b { white-space: nowrap; }
 @media (max-width: 560px) { .campos { grid-template-columns: minmax(0, 1fr); } }
 .campo { display: flex; align-items: center; gap: 10px; background: #f2f2f4; border: 2px solid transparent; border-radius: 10px; padding: 0 14px; min-height: 52px; transition: border-color .15s, background .15s; }
 .campo:focus-within { border-color: var(--verde); background: var(--branco); }
