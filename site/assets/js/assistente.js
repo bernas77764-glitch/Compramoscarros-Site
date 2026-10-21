@@ -212,7 +212,7 @@
     mostrarOutro("marca", outra);
     var modelos = MARCAS[b.dataset.v] ? ordenar(MARCAS[b.dataset.v]) : [];
     encher("modelo", modelos.concat([OUTRO_MODELO]).map(function (m) { return { v: m }; }));
-    $("[data-as-ajuda-modelo]").textContent = outra ? "Indique o modelo do seu carro." : "Modelos " + b.dataset.v + ". Deslize para o lado ou pesquise.";
+    $("[data-as-ajuda-modelo]").textContent = outra ? "Indique o modelo do seu carro." : "Modelos " + b.dataset.v + ". Deslize para baixo ou pesquise.";
     atualizarPassos();
     var niveis = equipamentosDaMarca();
     if (niveis) encher("nivel_equipamento", niveis.concat([OUTRO_EQUIPAMENTO]).map(function (v) { return { v: v }; }));
@@ -274,7 +274,7 @@
   // Setas para deslizar o carrossel do passo atual
   $("[data-as-setas]").addEventListener("click", function (ev) {
     var d = ev.target.dataset.dir, car = $(".as-carrossel", seccao(PASSOS[atual]));
-    if (d && car) car.scrollBy({ left: d * car.clientWidth * 0.8, behavior: "smooth" });
+    if (d && car) car.scrollBy({ top: d * car.clientHeight * 0.8, behavior: "smooth" });
   });
 
   // Campos de texto: atualizam o botão "Seguinte"; Enter avança

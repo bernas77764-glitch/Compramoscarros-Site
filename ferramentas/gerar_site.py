@@ -223,13 +223,13 @@ inicio = f"""
       <input type="hidden" name="transmissao" aria-label="Transmissão">
       <input type="hidden" name="segmento" aria-label="Segmento">
 
-      <div class="as-cab"><span class="as-n" data-as-n>Passo 1</span><div class="as-setas" data-as-setas><button type="button" data-dir="-1" aria-label="Ver anteriores">←</button><button type="button" data-dir="1" aria-label="Ver seguintes">→</button></div></div>
+      <div class="as-cab"><span class="as-n" data-as-n>Passo 1</span><div class="as-setas" data-as-setas><button type="button" data-dir="-1" aria-label="Ver anteriores">↑</button><button type="button" data-dir="1" aria-label="Ver seguintes">↓</button></div></div>
       <div class="as-barra" data-as-barra aria-hidden="true"></div>
       <div class="as-fichas" data-as-fichas aria-live="polite"></div>
 
       <section class="as-passo" data-passo="marca">
         <h2>Qual é a <em>marca</em>?</h2>
-        <p class="as-ajuda">Marque agora a avaliação do seu veículo! Deslize para o lado ou pesquise.</p>
+        <p class="as-ajuda">Marque agora a avaliação do seu veículo! Deslize para baixo ou pesquise.</p>
         <label class="as-pesquisa">{I["lupa"]}<input type="search" data-as-pesquisa placeholder="Pesquisar marca…" aria-label="Pesquisar marca" autocomplete="off"></label>
         <div class="as-carrossel" data-as-lista="marca" role="listbox" aria-label="Marcas"></div>
         <div class="campo largo as-outro" data-as-outro hidden>{I["car"]}<input type="text" name="marca_outra" placeholder="Indique a marca" aria-label="Marca (outra)" required disabled></div>

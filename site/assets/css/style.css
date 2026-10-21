@@ -356,8 +356,8 @@ main { overflow-x: clip; }
 .as-pesquisa svg { width: 20px; height: 20px; color: var(--verde); flex: 0 0 20px; }
 .as-pesquisa input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font: 500 16px "Barlow", sans-serif; color: var(--azul); padding: 13px 0; }
 
-.as-carrossel { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto); grid-auto-columns: 142px; gap: 9px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 3px 2px 12px; scrollbar-width: thin; scrollbar-color: var(--verde) transparent; }
-.as-carrossel.uma-linha { grid-template-rows: auto; grid-auto-columns: 86px; }
+.as-carrossel { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); align-content: start; gap: 9px; max-height: 268px; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y proximity; padding: 3px 8px 6px 2px; scrollbar-width: thin; scrollbar-color: var(--verde) transparent; }
+.as-carrossel.uma-linha { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); max-height: 190px; }
 .as-tile { scroll-snap-align: start; display: flex; align-items: center; gap: 9px; min-height: 54px; padding: 8px 11px; border: 2px solid var(--linha); background: var(--branco); border-radius: 6px 18px 6px 18px; cursor: pointer; text-align: left; font: 700 15px/1.15 "Barlow", sans-serif; color: var(--azul); transition: border-color .15s, transform .15s, box-shadow .15s, background .15s; }
 .as-tile[hidden] { display: none; }
 .as-tile:hover { border-color: var(--verde); transform: translateY(-2px); }
@@ -396,7 +396,8 @@ main { overflow-x: clip; }
 @media (max-width: 1100px) { .as-grandes.quatro { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) {
   .assistente { padding: 22px 16px 18px; }
-  .as-carrossel { grid-auto-columns: 132px; }
+  .as-carrossel { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 300px; }
+  .as-carrossel.uma-linha { grid-template-columns: repeat(3, minmax(0, 1fr)); max-height: 200px; }
   .as-meses { grid-template-columns: repeat(4, 1fr); }
   .as-setas { display: none; }
 }
