@@ -104,6 +104,9 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
   acrescentados à política de segurança (`politica_seguranca()` no gerador).
   Para testar: Meta Events Manager → pixel → "Testar eventos" (ou a extensão oficial da Meta),
   aceitar os cookies no site e confirmar PageView, AvaliacaoPasso e, com um pedido de teste, Lead.
+- [x] Repositório renomeado para `Compramoscarros-Site` (21/10/2026): foi preciso voltar a ligar o
+  repositório no Cloudflare (Settings → Build → Git repository). Se um envio para `main` não
+  aparecer nos Deployments, confirmar primeiro esta ligação.
 - [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
   desligado, "Always Use HTTPS" ativo. HTTP Observatory: **A+ (135/100)** (antes D, 30/100).
 - [x] Google Search Console (21/10/2026): propriedade de domínio compramoscarros.pt verificada,
