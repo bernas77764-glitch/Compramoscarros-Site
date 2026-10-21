@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Formulário C · Conversa — Compramos Carros</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="comum.css">
+<style>
+body { background: linear-gradient(135deg, var(--verde) 0 40%, var(--azul) 40%); background-attachment: fixed; }
+.palco { padding: 30px 16px 80px; }
+.chat { max-width: 760px; margin: 0 auto; background: #fff; border-radius: var(--raio); box-shadow: 16px 16px 0 var(--lima), 0 30px 60px rgba(0, 0, 0, .25); display: flex; flex-direction: column; height: min(820px, calc(100vh - 150px)); overflow: hidden; }
+.chat-cab { display: flex; align-items: center; gap: 12px; padding: 16px 22px; background: var(--azul); color: #fff; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: 0 0 44px; }
+.avatar img { width: 30px; }
+.chat-cab b { display: block; font-size: 17px; }
+.chat-cab small { color: var(--lima); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.chat-cab small::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lima); }
+.chat-cab .prog { margin-left: auto; font-weight: 800; color: var(--lima); font-size: 14px; }
+
+.mensagens { flex: 1; overflow-y: auto; padding: 22px; background: var(--fundo); display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+.msg { max-width: 78%; padding: 12px 16px; border-radius: 18px; font-size: 16.5px; line-height: 1.45; animation: entrar .3s; }
+.msg.bot { background: #fff; color: var(--azul); border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, .05); align-self: flex-start; }
+.msg.eu { background: var(--verde); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 600; }
+.msg.eu .icone svg { width: 64px; height: 30px; display: block; margin-bottom: 4px; color: var(--lima); }
+.msg.fotos { padding: 6px; display: grid; grid-template-columns: repeat(5, 54px); gap: 4px; }
+.msg.fotos img { width: 54px; height: 54px; object-fit: cover; border-radius: 10px; }
+.msg.cartao-final { background: var(--azul); color: #fff; max-width: 90%; }
+.msg.cartao-final b { color: var(--lima); }
+.a-escrever { align-self: flex-start; background: #fff; border-radius: 18px; padding: 14px 18px; display: flex; gap: 5px; }
+.a-escrever i { width: 8px; height: 8px; border-radius: 50%; background: var(--verde); animation: pulo 1s infinite; }
+.a-escrever i:nth-child(2) { animation-delay: .15s; } .a-escrever i:nth-child(3) { animation-delay: .3s; }
+@keyframes pulo { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-6px); opacity: 1; } }
+
+.respostas { border-top: 1px solid var(--linha); padding: 14px 16px 16px; background: #fff; }
+.respostas:empty { display: none; }
+.linha-pesquisa { display: flex; gap: 8px; margin-bottom: 10px; }
+.linha-pesquisa .entrada { padding: 11px 14px; font-size: 16px; }
+.chips { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto); grid-auto-columns: max-content; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; scrollbar-color: var(--verde) transparent; }
+.chips.uma { grid-template-rows: auto; }
+.chip { border: 2px solid var(--verde); background: #fff; color: var(--verde); font: 700 15px "Barlow", sans-serif; padding: 9px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: background .15s, color .15s, transform .15s; }
+.chip:hover { background: var(--verde); color: #fff; transform: translateY(-2px); }
+.chip.forte { background: var(--laranja); border-color: var(--laranja); color: #fff; }
+.chip.forte:hover { background: var(--laranja-escuro); }
+.chip.cinza { border-color: var(--linha); color: var(--suave); }
+.cartoes-seg { display: grid; grid-auto-flow: column; grid-auto-columns: 132px; gap: 10px; overflow-x: auto; padding-bottom: 8px; }
+.seg { border: 2px solid var(--linha); background: #fff; border-radius: 6px 18px 6px 18px; padding: 12px 8px 10px; cursor: pointer; color: var(--azul); font: 800 14px "Barlow", sans-serif; text-align: center; transition: border-color .15s, transform .15s; }
+.seg svg { width: 96px; height: 40px; display: block; margin: 0 auto 6px; color: var(--verde); }
+.seg:hover { border-color: var(--verde); transform: translateY(-2px); }
+.escrever { display: flex; gap: 8px; }
+.escrever .entrada { flex: 1; }
+.enviar { flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--laranja); color: #fff; cursor: pointer; display: grid; place-items: center; }
+.enviar:disabled { opacity: .35; cursor: not-allowed; }
+.enviar svg { width: 22px; }
+.mini-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mini-form .entrada { padding: 11px 14px; font-size: 16px; }
+.consent { display: flex; gap: 8px; font-size: 12.5px; color: var(--suave); margin: 10px 0; }
+.consent input { accent-color: var(--verde); width: 18px; height: 18px; flex: 0 0 18px; }
+.corrigir { background: none; border: 0; color: var(--suave); font: 600 13px "Barlow", sans-serif; cursor: pointer; margin-top: 4px; padding: 0; }
+.corrigir:hover { color: var(--azul); }
+@media (max-width: 600px) {
+  .palco { padding: 0 0 60px; }
+  .chat { border-radius: 0; box-shadow: none; height: calc(100vh - 76px - 50px); }
+  .msg { max-width: 88%; }
+  .mini-form { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="topo-demo"><div class="c"><img src="../assets/img/logo.svg" alt="Compramos Carros"><a class="voltar" href="index.html">← Ver os 3 modelos</a></div></header>
+<div class="palco">
+  <div class="chat">
+    <div class="chat-cab"><span class="avatar"><img src="../favicon.svg" alt=""></span><div><b>Compramos Carros</b><small>Avaliação grátis · online</small></div><span class="prog" id="prog">1/8</span></div>
+    <div class="mensagens" id="msgs" aria-live="polite"></div>
+    <div class="respostas" id="resp"></div>
+  </div>
+</div>
+<p class="aviso-demo">Modelo C · Conversa — demonstração, nada é enviado · <a href="index.html">ver outros</a></p>
+
+<script src="../assets/js/marcas.js"></script>
+<script src="comum.js"></script>
+<script>
+(function () {
+  var E = CC.estado, $ = function (id) { return document.getElementById(id); };
+  var msgs = $("msgs"), resp = $("resp"), historico = [];
+  var SETA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>';
+  var LUPA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="18"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>';
+
+  function rolar() { msgs.scrollTop = msgs.scrollHeight; }
+  function bot(texto) {
+    return new Promise(function (ok) {
+      var t = document.createElement("div"); t.className = "a-escrever"; t.innerHTML = "<i></i><i></i><i></i>";
+      msgs.appendChild(t); rolar();
+      setTimeout(function () { t.remove(); var m = document.createElement("div"); m.className = "msg bot"; m.innerHTML = texto; msgs.appendChild(m); rolar(); ok(); }, 650);
+    });
+  }
+  function eu(html, classe) { var m = document.createElement("div"); m.className = "msg eu " + (classe || ""); m.innerHTML = html; msgs.appendChild(m); rolar(); return m; }
+  function corrigir() { return historico.length > 1 ? '<button class="corrigir" id="corr">↺ Corrigir a resposta anterior</button>' : ""; }
+  function ligaCorrigir() { if ($("corr")) $("corr").onclick = voltar; }
+
+  function chips(lista, aoEscolher, opc) {
+    opc = opc || {};
+    resp.innerHTML = (opc.pesquisa ? '<div class="linha-pesquisa"><input class="entrada" id="q" placeholder="' + opc.pesquisa + '" autocomplete="off"></div>' : "") +
+      '<div class="chips ' + (opc.uma ? "uma" : "") + '" id="ch">' + lista.map(function (v) { return '<button class="chip" data-v="' + v + '">' + v + "</button>"; }).join("") + "</div>" + corrigir();
+    $("ch").onclick = function (ev) { var b = ev.target.closest(".chip"); if (b) aoEscolher(b.dataset.v); };
+    if (opc.pesquisa) $("q").oninput = function () { var q = CC.normal(this.value); Array.prototype.forEach.call($("ch").children, function (b) { b.style.display = CC.normal(b.dataset.v).indexOf(q) > -1 ? "" : "none"; }); };
+    ligaCorrigir();
+  }
+  function escrever(ph, tipo, aoEnviar, extra) {
+    resp.innerHTML = '<div class="escrever"><input class="entrada" id="txt" placeholder="' + ph + '" ' + (tipo === "number" ? 'type="number" inputmode="numeric"' : "") + '><button class="enviar" id="env" disabled aria-label="Enviar">' + SETA + "</button></div>" + (extra || "") + corrigir();
+    var t = $("txt"), b = $("env");
+    t.oninput = function () { if (ph.indexOf("AA-") === 0) t.value = t.value.toUpperCase(); b.disabled = !t.value.trim(); };
+    t.onkeydown = function (ev) { if (ev.key === "Enter" && t.value.trim()) aoEnviar(t.value.trim()); };
+    b.onclick = function () { aoEnviar(t.value.trim()); };
+    setTimeout(function () { t.focus(); }, 50);
+    ligaCorrigir();
+  }
+
+  var PASSOS = [
+    function () { return bot("Olá! 👋 Vamos avaliar o seu carro em menos de 1 minuto.").then(function () { return bot("Qual é a <b>marca</b> do seu carro?"); }).then(function () {
+      chips(CC.marcas(), function (v) { E.marca = v; responder(v); }, { pesquisa: "Pesquisar marca…" }); }); },
+    function () { return bot("Boa escolha! E qual é o <b>modelo</b> do seu " + E.marca + "?").then(function () {
+      chips(CC.modelos(E.marca), function (v) { E.modelo = v; responder(v); }, { pesquisa: "Pesquisar modelo…" }); }); },
+    function () { return bot("Em que <b>ano</b> foi matriculado?").then(function () {
+      chips(CC.anos, function (v) { E.ano = v; eu(v); bot("E em que <b>mês</b>?").then(function () {
+        chips(CC.meses, function (m) { E.mes = m; responder(m, true); }, { uma: false }); }); }, { uma: true }); }); },
+    function () { return bot("A caixa é <b>manual</b> ou <b>automática</b>?").then(function () {
+      resp.innerHTML = '<div class="cartoes-seg">' + CC.caixas.map(function (c) { return '<button class="seg" data-v="' + c.id + '">' + c.svg.replace("<svg", '<svg style="height:40px"') + c.id + "</button>"; }).join("") + "</div>" + corrigir();
+      resp.querySelector(".cartoes-seg").onclick = function (ev) { var b = ev.target.closest(".seg"); if (b) { E.caixa = b.dataset.v; responder(b.dataset.v); } };
+      ligaCorrigir(); }); },
+    function () { return bot("Qual destes se parece mais com o seu <b>" + E.modelo + "</b>?").then(function () {
+      resp.innerHTML = '<div class="cartoes-seg">' + CC.segmentos.map(function (s) { return '<button class="seg" data-v="' + s.id + '">' + s.svg + s.id + "</button>"; }).join("") + "</div>" + corrigir();
+      resp.querySelector(".cartoes-seg").onclick = function (ev) { var b = ev.target.closest(".seg"); if (!b) return; E.segmento = b.dataset.v;
+        var s = CC.segmentos.filter(function (x) { return x.id === E.segmento; })[0]; responder('<span class="icone">' + s.svg + "</span>" + s.id); };
+      ligaCorrigir(); }); },
+    function () { return bot("Quase lá! Qual é a <b>matrícula</b>?").then(function () {
+      escrever("AA-00-AA", "text", function (v) { E.matricula = v; eu(v); bot("E quantos <b>quilómetros</b> tem?").then(function () {
+        escrever("Ex.: 85000", "number", function (k) { E.km = k; eu(Number(k).toLocaleString("pt-PT") + " km"); bot("Quer acrescentar alguma <b>observação</b>? (extras, estado, revisões…)").then(function () {
+          escrever("Escreva aqui…", "text", function (o) { E.obs = o; responder(o, true); }, '<div class="chips uma" style="margin-top:8px"><button class="chip cinza" id="sem-obs">Não, obrigado</button></div>');
+          $("sem-obs").onclick = function () { E.obs = ""; responder("Não, obrigado", true); };
+        }); }); }); }); }); },
+    function () { return bot("Tem <b>fotos</b> do carro? Pode enviar até 10 (opcional). Ajudam-nos a fazer uma proposta mais certa. 📸").then(function () {
+      resp.innerHTML = '<label class="zona-fotos" style="padding:12px 16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2.5l1.5-2h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="4"/></svg><div><b>Escolher fotos</b><span>Exterior, interior, conta-quilómetros e danos.</span></div><input type="file" accept="image/*" multiple id="fotos"></label><div class="lista-fotos" id="lista"></div><div class="chips uma" style="margin-top:10px"><button class="chip forte" id="ok-fotos">Continuar</button><button class="chip cinza" id="sem-fotos">Não tenho agora</button></div>' + corrigir();
+      CC.fotos($("fotos"), $("lista"), function (n) { $("ok-fotos").textContent = n ? "Enviar " + n + " foto" + (n > 1 ? "s" : "") : "Continuar"; });
+      $("ok-fotos").onclick = function () {
+        if (!E.fotos.length) return responder("Sem fotos", false);
+        var m = eu("", "fotos"); E.fotos.forEach(function (f) { var img = document.createElement("img"); img.src = URL.createObjectURL(f); m.appendChild(img); }); responder(null);
+      };
+      $("sem-fotos").onclick = function () { E.fotos = []; responder("Não tenho agora"); };
+      ligaCorrigir(); }); },
+    function () { return bot("Perfeito! Para onde enviamos a <b>proposta</b>?").then(function () {
+      resp.innerHTML = '<div class="mini-form"><input class="entrada" id="nome" placeholder="Nome" autocomplete="name"><input class="entrada" id="tel" type="tel" placeholder="Telefone" autocomplete="tel"><input class="entrada" id="email" type="email" placeholder="E-mail" autocomplete="email"><select class="entrada" id="dist"><option value="">Distrito</option>' + CC.DISTRITOS.map(function (d) { return "<option>" + d + "</option>"; }).join("") + '</select></div><label class="consent"><input type="checkbox" id="consent"><span>Os dados recolhidos serão incluídos na nossa agenda de contactos, de acordo com a legislação de proteção de dados em vigor. <a href="../politica-de-privacidade.html">Política de Privacidade</a></span></label><button class="botao" id="pedir" style="width:100%" disabled>Pedir avaliação grátis</button>' + corrigir();
+      var campos = [["nome", "nome"], ["tel", "telefone"], ["email", "email"], ["dist", "distrito"]];
+      function val() { campos.forEach(function (p) { E[p[1]] = $(p[0]).value.trim(); }); E.consent = $("consent").checked; $("pedir").disabled = !(E.nome && E.telefone && E.email && E.distrito && E.consent); }
+      Array.prototype.forEach.call(resp.querySelectorAll("input,select"), function (el) { el.oninput = el.onchange = val; });
+      $("pedir").onclick = function () {
+        resp.innerHTML = ""; eu(E.nome + " · " + E.telefone); $("prog").textContent = "✓";
+        bot("Obrigado, " + E.nome.split(" ")[0] + "! 🎉").then(function () {
+          var m = document.createElement("div"); m.className = "msg cartao-final";
+          m.innerHTML = "Recebemos o pedido de avaliação do seu <b>" + E.marca + " " + E.modelo + "</b> (" + E.mes + " " + E.ano + ", " + E.caixa.toLowerCase() + ", " + Number(E.km).toLocaleString("pt-PT") + " km" + (E.fotos.length ? ", " + E.fotos.length + " foto(s)" : "") + ").<br><br>Em 24 horas irá receber uma proposta (por email ou contacto telefónico).";
+          msgs.appendChild(m); rolar();
+        });
+      };
+      ligaCorrigir(); }); }
+  ];
+
+  var passo = 0;
+  function responder(html) {
+    if (html !== null && html !== undefined) eu(html);
+    historico.push(msgs.children.length);
+    resp.innerHTML = ""; passo++; $("prog").textContent = Math.min(passo + 1, PASSOS.length) + "/" + PASSOS.length;
+    if (PASSOS[passo]) PASSOS[passo]();
+  }
+  function voltar() {
+    // Desfaz o último passo: retira as mensagens desde o início desse passo
+    historico.pop();
+    var ate = historico.length ? historico[historico.length - 1] : 0;
+    while (msgs.children.length > ate) msgs.lastChild.remove();
+    passo--; resp.innerHTML = ""; $("prog").textContent = (passo + 1) + "/" + PASSOS.length;
+    PASSOS[passo]();
+  }
+  historico.push(0);
+  PASSOS[0]();
+})();
+</script>
+</body>
+</html>
