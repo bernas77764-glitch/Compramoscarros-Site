@@ -88,7 +88,9 @@ repositório: cada alteração no ramo `main` é publicada automaticamente em 1 
   - só ativar o pixel depois de o visitante aceitar os cookies (RGPD) e acrescentar o botão
     "Recusar" ao aviso de cookies (hoje só tem "Aceitar"); rever a Política de cookies.
 - [x] **Mudança para o Cloudflare** (21/10/2026): domínios ligados ao Worker, GitHub Pages
-  desligado. Falta confirmar a nota no HTTP Observatory (esperado A/A+).
+  desligado, "Always Use HTTPS" ativo. HTTP Observatory: **A+ (135/100)** (antes D, 30/100).
+- [ ] (Opcional) Redirecionar www.compramoscarros.pt para compramoscarros.pt (Cloudflare →
+  Rules → Redirect Rules).
 - [ ] (Opcional) Página de agradecimento própria para o formulário de Contactos, para medir
   também esses contactos.
 - [ ] (CRM) Mostrar na lead o campo `fotos_nao_enviadas`, enviado quando as fotos falham e o
