@@ -620,4 +620,19 @@ paginas = ["", "como-funciona.html", "quem-somos.html", "centro-de-entregas.html
     + "".join(f"  <url><loc>{DOMINIO}/{p}</loc></url>\n" for p in paginas) + "</urlset>\n", encoding="utf-8")
 (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {DOMINIO}/sitemap.xml\n", encoding="utf-8")
 (OUT / "CNAME").write_text("compramoscarros.pt\n", encoding="utf-8")
+
+# Cabeçalhos de segurança para o Cloudflare Pages (o GitHub Pages ignora este ficheiro).
+# A CSP é a mesma das páginas, mais frame-ancestors, que só funciona como cabeçalho.
+(OUT / "_headers").write_text(f"""/*
+  Content-Security-Policy: {politica_seguranca()}; frame-ancestors 'none'
+  Strict-Transport-Security: max-age=31536000
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+/assets/*
+  Cache-Control: public, max-age=86400
+""", encoding="utf-8")
 print("ok")
