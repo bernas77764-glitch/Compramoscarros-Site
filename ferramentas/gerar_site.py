@@ -145,7 +145,8 @@ def pagina(ficheiro, titulo, descricao, corpo, atual=None, indexar=True):
 <script src="assets/js/config.js?v={versao("assets/js/config.js")}"></script>
 <script src="assets/js/pixel.js?v={versao("assets/js/pixel.js")}"></script>
 {f'<script src="assets/js/marcas.js?v={versao("assets/js/marcas.js")}"></script>' if 'data-as-lista="marca"' in corpo else ""}
-{f'<script src="assets/js/versoes.js?v={versao("assets/js/versoes.js")}"></script>' if 'data-as-lista="versao_motor"' in corpo else ""}
+{f'<script src="assets/js/versoes.js?v={versao("assets/js/versoes.js")}"></script>' if 'data-as-lista="motor_escolha"' in corpo else ""}
+{f'<script src="assets/js/motorizacoes.js?v={versao("assets/js/motorizacoes.js")}"></script>' if 'data-as-lista="motor_escolha"' in corpo else ""}
 <script src="assets/js/main.js?v={versao("assets/js/main.js")}"></script>
 {f'<script src="assets/js/assistente.js?v={versao("assets/js/assistente.js")}"></script>' if 'data-assistente' in corpo else ""}
 </body>
@@ -222,7 +223,9 @@ inicio = f"""
       <input type="hidden" name="marca" aria-label="Marca do carro">
       <input type="hidden" name="modelo" aria-label="Modelo do carro">
       <input type="hidden" name="versao" aria-label="Versão do carro">
+      <input type="hidden" name="combustivel" aria-label="Combustível">
       <input type="hidden" name="versao_motor" aria-label="Motorização">
+      <input type="hidden" name="motor_escolha">
       <input type="hidden" name="nivel_equipamento" aria-label="Nível de equipamento">
       <input type="hidden" name="ano" aria-label="Ano do Carro">
       <input type="hidden" name="mes" aria-label="Mês do Carro">
@@ -249,10 +252,16 @@ inicio = f"""
         <div class="campo largo as-outro" data-as-outro hidden>{I["car"]}<input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
       </section>
 
+      <section class="as-passo" data-passo="combustivel" hidden>
+        <h2>Qual o <em>combustível</em>?</h2>
+        <div class="as-grandes tres" data-as-lista="combustivel" role="listbox" aria-label="Combustível"></div>
+      </section>
+
       <section class="as-passo" data-passo="versao" hidden>
-        <h2>Qual é a <em>versão</em>?</h2>
-        <p class="as-ajuda" data-as-ajuda-versao>Escolha a motorização. Se não souber, escolha "Outra / não sei".</p>
-        <div class="as-versoes" data-as-lista="versao_motor" role="listbox" aria-label="Versões"></div>
+        <h2>Qual é a <em>motorização</em>?</h2>
+        <p class="as-ajuda" data-as-ajuda-versao>Se não souber, escolha "Outra / não sei".</p>
+        <div class="as-versoes" data-as-lista="motor_escolha" role="listbox" aria-label="Motorizações"></div>
+        <div class="campo largo as-outro" data-as-motor-texto hidden>{I["car"]}<input type="text" name="motor_texto" maxlength="60" placeholder="Motorização / potência (opcional)" aria-label="Motorização indicada pelo cliente"></div>
       </section>
 
       <section class="as-passo" data-passo="equipamento" hidden>

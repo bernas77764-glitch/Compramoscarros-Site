@@ -1,11 +1,14 @@
 /*
  * Formulário de avaliação passo a passo (página inicial).
  *
- * Passos: marca → modelo → versão (só nos modelos de versoes.js) → nível de equipamento (só nas
- * marcas de versoes.js) → ano e mês → caixa → segmento → matrícula/km/observações
+ * Passos: marca → modelo → combustível → motorização → nível de equipamento (só nas marcas de
+ * versoes.js) → ano e mês → caixa (saltada nos elétricos) → segmento → matrícula/km/observações
  * → fotos (só se config.js tiver aceitaFotos) → dados de contacto.
+ * Motorização: lista do modelo ou da marca (motorizacoes.js, versoes.js), filtrada pelo combustível;
+ * sem lista, o cliente escolhe a cilindrada e pode escrever a motorização. Nos elétricos sem lista
+ * o passo é saltado. "Outra / não sei" mostra o campo de texto.
  * As escolhas ficam em campos escondidos com os mesmos nomes do formulário antigo
- * (marca, modelo, versao, ano, mes, transmissao) e mais "segmento" e "observacoes".
+ * (marca, modelo, versao, ano, mes, transmissao) e mais "combustivel", "segmento" e "observacoes".
  * "versao" junta a motorização e o nível de equipamento ("118d · Pack M / M Sport"), que também
  * seguem em separado em "versao_motor" e "nivel_equipamento".
  * O envio é feito por main.js (CRM ou WhatsApp), como nos outros formulários.
@@ -32,6 +35,18 @@
       svg: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="10" r="3.5"/><circle cx="24" cy="10" r="3.5"/><circle cx="36" cy="10" r="3.5"/><circle cx="12" cy="38" r="3.5"/><circle cx="24" cy="38" r="3.5"/><circle cx="36" cy="38" r="3.5"/><path d="M12 13.5v21M24 13.5v21M36 13.5v21M12 24h24"/></svg>' },
     { v: "Automática", nota: "Sem pedal de embraiagem",
       svg: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="14" y="4" width="20" height="40" rx="6"/>' + letra("P", 15) + letra("R", 24) + letra("N", 33) + letra("D", 42) + "</svg>" }
+  ];
+  function icone(corpo) {
+    return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + corpo + "</svg>";
+  }
+  var BOMBA = '<path d="M8 42V9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v33M5 42h26M28 18h4a3 3 0 0 1 3 3v12a2.5 2.5 0 0 0 5 0V16l-5-5"/>';
+  var COMBUSTIVEIS = [
+    { v: "Gasolina", svg: icone(BOMBA + '<path d="M12 13h12v9H12z"/>') },
+    { v: "Gasóleo", nota: "Diesel", svg: icone(BOMBA + '<text x="18" y="24" font-family="Barlow,sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="currentColor" stroke="none">D</text>') },
+    { v: "Híbrido", nota: "Não carrega na tomada", svg: icone('<path d="M10 38c0-16 10-28 30-28 0 20-12 30-28 30M10 38l16-16"/>') },
+    { v: "Híbrido plug-in", nota: "Carrega na tomada", svg: icone('<path d="M17 4v10M31 4v10M12 14h24v8a12 12 0 0 1-24 0zM24 34v10"/>') },
+    { v: "Elétrico", svg: icone('<path d="M27 4 10 27h13l-3 17 18-24H25z"/>') },
+    { v: "GPL / Bi-fuel", nota: "Gás (GPL ou GNV)", svg: icone('<path d="M16 12h16a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6V18a6 6 0 0 1 6-6zM19 12V5h10v7M17 26h14"/>') }
   ];
   var SEGMENTOS = [
     { v: "Citadino", svg: carro("M14 31H8v-8l6-3 8-9h22l10 9h4l4 4v7h-6M30 31h36M44 11v9M22 20h36") },
@@ -84,34 +99,64 @@
   encher("marca", ordenar(Object.keys(MARCAS)).concat([OUTRA_MARCA]).map(function (m) { return { v: m, mono: true }; }));
   encher("ano", anos.map(function (x) { return { v: x }; }));
   encher("mes", MESES.map(function (m) { return { v: m, texto: m.slice(0, 3) }; }));
+  encher("combustivel", COMBUSTIVEIS.map(function (c) { return { v: c.v, svg: c.svg, nota: c.nota, classe: "as-grande" }; }));
   encher("transmissao", CAIXAS.map(function (c) { return { v: c.v, svg: c.svg, nota: c.nota, classe: "as-grande" }; }));
   encher("segmento", SEGMENTOS.map(function (s) { return { v: s.v, svg: s.svg, classe: "as-grande" }; }));
 
   // ---------- Passos ----------
   var temFotos = !$("[data-fotos]").hidden;   // main.js mostra o bloco só se o CRM aceitar fotos
-  var VERSOES = window.CC_VERSOES || {}, OUTRA_VERSAO = "Outra / não sei";
+  var VERSOES = window.CC_VERSOES || {}, MOTORES = window.CC_MOTORES || {}, OUTRA_VERSAO = "Outra / não sei";
   var EQUIPAMENTOS = window.CC_EQUIPAMENTOS || {}, OUTRO_EQUIPAMENTO = "Outro / não sei";
-  var TODOS = ["marca", "modelo", "versao", "equipamento", "data", "caixa", "segmento", "detalhes", "fotos", "dados"];
+  var CILINDRADAS = ["Até 1.0", "1.1 a 1.3", "1.4 a 1.6", "1.7 a 2.0", "Mais de 2.0"], NAO_SEI = "Não sei";
+  var TODOS = ["marca", "modelo", "combustivel", "versao", "equipamento", "data", "caixa", "segmento", "detalhes", "fotos", "dados"];
   var PASSOS = [], atual = 0;
+  var caixaAutomatica = false;   // "Automática" escolhida sozinha por ser elétrico
 
-  // Versões conhecidas do modelo escolhido (versoes.js); sem versões, o passo "Versão" é saltado.
-  function versoesDoModelo() {
-    var m = VERSOES[campo("marca").value];
-    return (m && m[campo("modelo").value]) || null;
+  // Motorizações conhecidas para a marca, o modelo e o combustível escolhidos (null = escolha genérica)
+  function motoresConhecidos() {
+    var marca = campo("marca").value, modelo = campo("modelo").value, comb = campo("combustivel").value;
+    var m = MOTORES[marca] || {};
+    if (m[modelo] && m[modelo][comb]) return m[modelo][comb];
+    if (VERSOES[marca] && VERSOES[marca][modelo]) return VERSOES[marca][modelo];
+    if (m["*"] && m["*"][comb]) return m["*"][comb];
+    return null;
   }
+  function eletrico() { return campo("combustivel").value === "Elétrico"; }
+  function comPassoMotor() { return !!motoresConhecidos() || !eletrico(); }
   function equipamentosDaMarca() { return EQUIPAMENTOS[campo("marca").value] || null; }
   function atualizarPassos() {
-    var comVersao = !!versoesDoModelo(), comEquipamento = !!equipamentosDaMarca();
-    if (!comVersao) campo("versao_motor").value = "";
+    var comEquipamento = !!equipamentosDaMarca();
     if (!comEquipamento) campo("nivel_equipamento").value = "";
+    if (!comPassoMotor()) { campo("motor_escolha").value = ""; campo("motor_texto").value = ""; }
     comporVersao();
-    PASSOS = ["marca", "modelo"].concat(comVersao ? ["versao"] : []).concat(comEquipamento ? ["equipamento"] : [])
-      .concat(["data", "caixa", "segmento", "detalhes"]).concat(temFotos ? ["fotos"] : []).concat(["dados"]);
+    PASSOS = ["marca", "modelo", "combustivel"].concat(comPassoMotor() ? ["versao"] : []).concat(comEquipamento ? ["equipamento"] : [])
+      .concat(["data"]).concat(eletrico() ? [] : ["caixa"]).concat(["segmento", "detalhes"]).concat(temFotos ? ["fotos"] : []).concat(["dados"]);
   }
+  // Prepara o passo "Motorização": lista conhecida ou cilindradas, e o campo de texto
+  function prepararMotor() {
+    var lista = motoresConhecidos(), marca = campo("marca").value;
+    campo("motor_escolha").value = ""; campo("motor_texto").value = "";
+    var caixa = $("[data-as-lista='motor_escolha']");
+    caixa.dataset.modo = lista ? "lista" : "cilindrada";
+    encher("motor_escolha", (lista ? lista.concat([OUTRA_VERSAO]) : CILINDRADAS.concat([NAO_SEI])).map(function (v) { return { v: v }; }));
+    $("[data-as-motor-texto]").hidden = !!lista;
+    campo("motor_texto").placeholder = "Motorização / potência (opcional)" + (EXEMPLOS[marca] ? ", ex.: " + EXEMPLOS[marca] : "");
+    $("[data-as-ajuda-versao]").textContent = lista
+      ? "Motorizações " + [marca, campo("modelo").value].join(" ") + ' (' + campo("combustivel").value.toLowerCase() + '). Se não souber, escolha "' + OUTRA_VERSAO + '".'
+      : "Escolha a cilindrada do motor e, se souber, escreva a motorização.";
+  }
+  var EXEMPLOS = { "Renault": "1.5 dCi 90 cv", "Dacia": "1.0 TCe 90 cv", "Peugeot": "1.2 PureTech 130 cv", "Citroën": "1.5 BlueHDi 100 cv",
+    "Opel": "1.2 Turbo 130 cv", "Fiat": "1.3 Multijet 95 cv", "Volkswagen": "1.6 TDI 115 cv", "Seat": "1.0 TSI 110 cv", "Skoda": "1.6 TDI 115 cv",
+    "Toyota": "1.8 Hybrid 122 cv", "Nissan": "1.5 dCi 110 cv", "Ford": "1.0 EcoBoost 125 cv", "Hyundai": "1.6 CRDi 115 cv", "Kia": "1.6 CRDi 136 cv",
+    "Mercedes-Benz": "C 220 d", "BMW": "320d", "Audi": "2.0 TDI 150 cv" };
   // "versao" (o campo que o CRM mostra) junta a motorização e o nível de equipamento
   function comporVersao() {
+    var escolha = campo("motor_escolha").value, texto = campo("motor_texto").value.trim();
+    if (escolha === OUTRA_VERSAO || escolha === NAO_SEI) escolha = "";
+    else if (escolha && $("[data-as-lista='motor_escolha']").dataset.modo === "cilindrada") escolha = "Cilindrada " + escolha.toLowerCase();
+    campo("versao_motor").value = [texto, escolha].filter(Boolean).join(" · ");
     var partes = [];
-    if (campo("versao_motor").value && campo("versao_motor").value !== OUTRA_VERSAO) partes.push(campo("versao_motor").value);
+    if (campo("versao_motor").value) partes.push(campo("versao_motor").value);
     if (campo("nivel_equipamento").value && campo("nivel_equipamento").value !== OUTRO_EQUIPAMENTO) partes.push(campo("nivel_equipamento").value);
     campo("versao").value = partes.join(" · ");
   }
@@ -132,7 +177,8 @@
     switch (id) {
       case "marca": return campo("marca").value && (campo("marca").value !== OUTRA_MARCA || outroTexto("marca").value.trim());
       case "modelo": return campo("modelo").value && (campo("modelo").value !== OUTRO_MODELO || outroTexto("modelo").value.trim());
-      case "versao": return campo("versao_motor").value;
+      case "combustivel": return campo("combustivel").value;
+      case "versao": return campo("motor_escolha").value || campo("motor_texto").value.trim();
       case "equipamento": return campo("nivel_equipamento").value;
       case "data": return campo("ano").value && campo("mes").value;
       case "caixa": return campo("transmissao").value;
@@ -150,6 +196,7 @@
     var modelo = campo("modelo").value === OUTRO_MODELO ? outroTexto("modelo").value.trim() : campo("modelo").value;
     if (marca) e.push(marca);
     if (modelo) e.push(modelo);
+    if (campo("combustivel").value) e.push(campo("combustivel").value);
     if (campo("versao").value) e.push(campo("versao").value);
     if (campo("ano").value) e.push((campo("mes").value ? campo("mes").value.slice(0, 3) + " " : "") + campo("ano").value);
     if (campo("transmissao").value) e.push(campo("transmissao").value);
@@ -204,7 +251,7 @@
   $("[data-as-lista='marca']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
     if (campo("marca").value !== b.dataset.v) {
-      campo("modelo").value = ""; campo("versao_motor").value = ""; campo("nivel_equipamento").value = "";
+      campo("modelo").value = ""; campo("motor_escolha").value = ""; campo("motor_texto").value = ""; campo("nivel_equipamento").value = "";
       mostrarOutro("modelo", false);
     }
     escolher("marca", b.dataset.v);
@@ -216,27 +263,42 @@
     atualizarPassos();
     var niveis = equipamentosDaMarca();
     if (niveis) encher("nivel_equipamento", niveis.concat([OUTRO_EQUIPAMENTO]).map(function (v) { return { v: v }; }));
-    if (outra) { escolher("modelo", OUTRO_MODELO); mostrarOutro("modelo", true); outroTexto("marca").focus(); }
+    if (outra) escolher("modelo", OUTRO_MODELO);
+    if (campo("combustivel").value) { prepararMotor(); atualizarPassos(); }
+    if (outra) { mostrarOutro("modelo", true); outroTexto("marca").focus(); }
     else avancarDepois();
   });
   $("[data-as-lista='modelo']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    if (campo("modelo").value !== b.dataset.v) campo("versao_motor").value = "";
+    var mudou = campo("modelo").value !== b.dataset.v;
     escolher("modelo", b.dataset.v);
+    if (mudou && campo("combustivel").value) prepararMotor();
     atualizarPassos();
-    var versoes = versoesDoModelo();
-    if (versoes) {
-      encher("versao_motor", versoes.concat([OUTRA_VERSAO]).map(function (v) { return { v: v }; }));
-      $("[data-as-ajuda-versao]").textContent = "Versões " + campo("marca").value + " " + b.dataset.v + '. Se não souber, escolha "' + OUTRA_VERSAO + '".';
-    }
     var outro = b.dataset.v === OUTRO_MODELO;
     mostrarOutro("modelo", outro);
     if (outro) outroTexto("modelo").focus(); else avancarDepois();
   });
-  $("[data-as-lista='versao_motor']").addEventListener("click", function (ev) {
+  $("[data-as-lista='combustivel']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
-    escolher("versao_motor", b.dataset.v);
+    var mudou = campo("combustivel").value !== b.dataset.v;
+    escolher("combustivel", b.dataset.v);
+    if (mudou) prepararMotor();
+    // Os elétricos não têm caixa manual: fica "Automática" e o passo é saltado
+    if (eletrico()) { campo("transmissao").value = "Automática"; caixaAutomatica = true; }
+    else if (caixaAutomatica) { campo("transmissao").value = ""; caixaAutomatica = false; }
+    marcarEscolhido("transmissao");
+    atualizarPassos();
+    comporVersao(); fichas(); atualizarBotoes();
     avancarDepois();
+  });
+  $("[data-as-lista='motor_escolha']").addEventListener("click", function (ev) {
+    var b = ev.target.closest("button"); if (!b) return;
+    var lista = this.dataset.modo === "lista", outra = b.dataset.v === OUTRA_VERSAO;
+    if (lista) { $("[data-as-motor-texto]").hidden = !outra; if (!outra) campo("motor_texto").value = ""; }
+    escolher("motor_escolha", b.dataset.v);
+    // Na lista avança logo; em "Outra / não sei" e nas cilindradas espera, para poder escrever a motorização
+    if (lista && !outra) avancarDepois();
+    else if (outra) campo("motor_texto").focus();
   });
   $("[data-as-lista='nivel_equipamento']").addEventListener("click", function (ev) {
     var b = ev.target.closest("button"); if (!b) return;
@@ -279,6 +341,7 @@
 
   // Campos de texto: atualizam o botão "Seguinte"; Enter avança
   form.addEventListener("input", function (ev) {
+    if (ev.target.name === "motor_texto") comporVersao();
     if (ev.target.name === "observacoes") {
       var max = ev.target.maxLength, n = ev.target.value.length;
       var contador = $("[data-as-contador]");

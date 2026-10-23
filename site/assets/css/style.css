@@ -377,6 +377,7 @@ main { overflow-x: clip; }
 
 .as-grandes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .as-grandes.quatro { grid-template-columns: repeat(4, 1fr); }
+.as-grandes.tres { grid-template-columns: repeat(3, 1fr); }
 .as-grande { border: 2px solid var(--linha); background: var(--branco); border-radius: 6px 22px 6px 22px; padding: 18px 10px 14px; cursor: pointer; text-align: center; color: var(--azul); font: 800 15.5px/1.2 "Barlow", sans-serif; transition: border-color .15s, transform .15s, box-shadow .15s, background .15s; }
 .as-grande svg { width: 78px; height: 50px; display: block; margin: 0 auto 8px; color: var(--verde); }
 .as-grande small { display: block; font-weight: 500; color: var(--suave); font-size: 13px; margin-top: 3px; }
@@ -404,6 +405,7 @@ main { overflow-x: clip; }
   .as-carrossel { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 300px; }
   .as-carrossel.uma-linha { grid-template-columns: repeat(3, minmax(0, 1fr)); max-height: 200px; }
   .as-meses { grid-template-columns: repeat(4, 1fr); }
+  .as-grandes.tres { grid-template-columns: repeat(2, 1fr); }
   .as-setas { display: none; }
 }
 

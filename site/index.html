@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=6b1155e6">
+<link rel="stylesheet" href="assets/css/style.css?v=4cf7df8b">
 </head>
 <body>
 <header class="cabecalho">
@@ -46,7 +46,9 @@
       <input type="hidden" name="marca" aria-label="Marca do carro">
       <input type="hidden" name="modelo" aria-label="Modelo do carro">
       <input type="hidden" name="versao" aria-label="Versão do carro">
+      <input type="hidden" name="combustivel" aria-label="Combustível">
       <input type="hidden" name="versao_motor" aria-label="Motorização">
+      <input type="hidden" name="motor_escolha">
       <input type="hidden" name="nivel_equipamento" aria-label="Nível de equipamento">
       <input type="hidden" name="ano" aria-label="Ano do Carro">
       <input type="hidden" name="mes" aria-label="Mês do Carro">
@@ -73,10 +75,16 @@
         <div class="campo largo as-outro" data-as-outro hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="modelo_outro" placeholder="Indique o modelo" aria-label="Modelo (outro)" required disabled></div>
       </section>
 
+      <section class="as-passo" data-passo="combustivel" hidden>
+        <h2>Qual o <em>combustível</em>?</h2>
+        <div class="as-grandes tres" data-as-lista="combustivel" role="listbox" aria-label="Combustível"></div>
+      </section>
+
       <section class="as-passo" data-passo="versao" hidden>
-        <h2>Qual é a <em>versão</em>?</h2>
-        <p class="as-ajuda" data-as-ajuda-versao>Escolha a motorização. Se não souber, escolha "Outra / não sei".</p>
-        <div class="as-versoes" data-as-lista="versao_motor" role="listbox" aria-label="Versões"></div>
+        <h2>Qual é a <em>motorização</em>?</h2>
+        <p class="as-ajuda" data-as-ajuda-versao>Se não souber, escolha "Outra / não sei".</p>
+        <div class="as-versoes" data-as-lista="motor_escolha" role="listbox" aria-label="Motorizações"></div>
+        <div class="campo largo as-outro" data-as-motor-texto hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15v-3l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 7l2 5v3"/><rect x="2" y="12" width="20" height="5" rx="1.5"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><input type="text" name="motor_texto" maxlength="60" placeholder="Motorização / potência (opcional)" aria-label="Motorização indicada pelo cliente"></div>
       </section>
 
       <section class="as-passo" data-passo="equipamento" hidden>
@@ -197,7 +205,8 @@
 <script src="assets/js/pixel.js?v=b37f6448"></script>
 <script src="assets/js/marcas.js?v=3bb9d85a"></script>
 <script src="assets/js/versoes.js?v=7a4a7460"></script>
+<script src="assets/js/motorizacoes.js?v=489a2340"></script>
 <script src="assets/js/main.js?v=e0d11b49"></script>
-<script src="assets/js/assistente.js?v=2a44d4f4"></script>
+<script src="assets/js/assistente.js?v=1890e897"></script>
 </body>
 </html>
